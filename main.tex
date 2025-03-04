@@ -1,0 +1,101 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{Putting Low German on the Map (of Linguistic Linked Open Data)}
+\author{Christian Chiarcos}
+\date{March 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Background}
+
+Low German or Low Saxon (Plattdeutsch or Niederdeutsch) is an independent West Germanic language historically spoken in northern Germany and the eastern Netherlands. It is distinct from both High German and Dutch, with its own grammatical structures, vocabulary, and pronunciation. Despite being related to these languages, Low German has evolved separately for centuries and retains unique linguistic features. It is thus recognized as a regional language and protected under the European Charter for Regional or Minority Languages (ECRML). 
+Historically, Low German was a major language of trade and administration, particularly during the Hanseatic League (13th–17th centuries), when it served as a lingua franca across the North and Baltic Sea regions. However, its status declined as High German became the dominant language of education, administration, and media. Today, Low German is considered endangered, as younger generations increasingly shift to High German or regional dialects of Dutch. While it still has millions of passive speakers, active speakers are far fewer, and one of the most pressing issues facing Low German today is the transmission challenge to the next generation of speakers. This includes didactic and educational material, but also basic NLP tools like spell checkers, machine translation, speech recognition, and text-to-speech systems are either completely absent or in very early stages of development. This technological gap makes it difficult to use Low German in digital communication, reducing its visibility and usability in the modern world. The absence of NLP tools also hinders academic research, automated language processing, and efforts to create digital content in Low German. 
+
+Despite its challenges, Low German enjoys cultural and regional recognition. Efforts to revitalize the language include educational programs, literature, radio broadcasts, and online initiatives. However, without stronger support on many levels, the survival of Low German as a living language remains uncertain. In fact, social networks and digital language resources may play a role in transmission and revitalization of the Low German language, and indeed, this is what we see for other minority languages all over the world. 
+To preserve Low German, more work is needed to integrate it into digital spaces. Developing NLP tools, expanding online resources, and increasing its presence in modern media are crucial steps in ensuring that Low German remains a functional and thriving language for future generations. At the moment, however, even the most basic NLP resources are still lacking. For Low German, only small samples of annotated major corpora are known to exist, no parallel corpora (although translated texts can be found, mostly translated into Low German), and no machine-readable dictionaries. 
+
+A \emph{machine-readable dictionary (MRD)} is a structured lexical resource designed for computational use rather than human readability. Unlike traditional dictionaries, MRDs are formatted in a way that allows software applications to process and analyze linguistic data efficiently. They store information such as word meanings, grammatical properties, pronunciations, and translations in a structured manner to facilitate the development of downstream applications. For low-resource languages, \emph{machine-readable dictionaries} (MRDs) play a crucial role in developing foundational NLP technologies. In particular, this is the case for language varieties that have been the subject of linguistic research in the past (so that word lists or dictionaries are available), but that have been largely neglected by NLP or corpus linguistics (so that no digital corpus data is available). This paper addresses the development of an initial set of MRDs for different varieties of Low German. 
+Despite being a literary language for about a thousand years and an extant regional literature from the 19th and 20th c., this is the case for Low German: Textual material is available, but not in digital form. Since low resource languages lack large annotated corpora, extensive linguistic databases, or pre-trained models, MRDs serve as a primary data source for computational applications. They facilitate the creation of essential tools such as spell checkers, part-of-speech taggers, and lemmatizers, helping bridge the technological gap between widely spoken and endangered languages. We can build on a number of digital dictionaries in existence, but each pertains to a different variety and all are designed for human consumption, and not for subsequent use in natural language processing. In addition to that, most of these are copyright-protected, either explicitly or by default copyright (if copyright is undeclared). The approach we suggest can, however, be applied to other Low German dictionaries and dialects if copyright can be secured.
+    
+A key technology for building structured and interoperable MRDs is \emph{OntoLex-Lemon}, an RDF (Resource Description Framework) vocabulary  designed for representing lexical and semantic data on the web. OntoLex allows lexicons to be linked to external knowledge bases and other linguistic resources, enhancing interoperability. It uses, RDF, a W3C standard, to provide a flexible, graph-based data model that enables rich semantic annotations and structured linguistic relationships. Together, these technologies ensure that dictionaries for low-resource languages are not isolated but can be \emph{integrated into broader linguistic ecosystems}, facilitating cross-linguistic research and NLP. By leveraging OntoLex and RDF, MRDs for low-resource languages can be built in a way that supports automated processing, encourages digital preservation, and enables their incorporation into modern NLP applications. These technologies make it easier to link lexical resources across languages, ensuring that low-resource languages gain better representation in computational linguistics and digital tools. As such, OntoLex has been a cornerstone for integrating lexical data into the Linguistic Linked Open Data (LLOD) cloud. 
+
+The \emph{Linguistic Linked Open Data (LLOD)} cloud is a structured network of interlinked linguistic resources published in accordance with the principles of Linked Data \cite{bizer2009linked}. It provides a semantic web-based infrastructure for representing and integrating linguistic data, including lexicons, corpora, terminologies, and ontologies. By leveraging RDF (Resource Description Framework) and related technologies, the LLOD cloud enables interoperability and data exchange across various NLP and linguistic applications \cite{chiarcos2013linguistic}.  A key advantage of the LLOD approach is its ability to connect diverse linguistic datasets, making them accessible for computational use. Resources such as OntoLex-Lemon facilitate the representation of lexicons, while linguistic ontologies like OLiA (Ontologies of Linguistic Annotations) provide standardized annotation frameworks \cite{chiarcos2012olia}. The LLOD cloud benefits low-resource languages by linking their limited linguistic data to richer datasets, fostering NLP development and linguistic research. By structuring linguistic resources using open standards, the LLOD cloud contributes to the creation of multilingual and interoperable NLP systems, supporting tasks such as machine translation, semantic search, and corpus analysis. As the LLOD cloud expands, it plays an increasingly vital role in the digital preservation and computational accessibility of linguistic knowledge.  
+
+
+%digital and digital-born Low German dictionaries
+
+%Selected digital dictionaries
+
+%\begin{itemize}
+%    \item https://woerterbuchnetz.de/?sigle=WWB&lemid=A00001
+%    \item Digitales Wörterbuch Niederdeutsch (dwn), https://www.niederdeutsche-literatur.de/dwn/
+%    \item https://www.ndr.de/kultur/norddeutsche_sprache/plattdeutsch/woerterbuch101.html: unregulated orthographies
+%    \item Plattmakers
+ %   \item https://www.platt-wb.de/
+  %  \item WöWö
+   % \item Mittelelbisches (nur A-O, https://mew.uzi.uni-halle.de/artikel/25748)
+    %\item https://www.plattdeutsches-woerterbuch.de/search (suche nach leerem string, um alles zu bekommen), keine einzelseiten
+%    \item https://netz.sass-platt.de/hoch-platt
+%    \item wiktionary
+%\end{itemize}
+
+A number of digital, and in parts, digital-born, dictionaries of different varieties of Low German are available online. Selected dictionaries with permissive licenses include the following:
+
+Additional dictionaries under restrictive (or implicit, i.e., restrictive-by-default) licenses include:
+
+\begin{description}
+\item[Digitales Wörterbuch Niederdeutsch (DWN)] is a collection of digital Low German dictionaries covering multiple dialects.\footnote{\url{https://www.niederdeutsche-literatur.de/dwn/}} It seems to be developed by a single individual only, albeit in parts in collaboration with academic partners (e.g., the Kompetenzzentrum für Niederdeutschdidaktik of the University of Greifswald, for whose Mecklenburgian dictionary it provides the technical backbone).\footnote{\url{https://länderzentrum-für-niederdeutsch.de/renate-hermann-winter-woerterbuch-nun-online/}} The dictionaries are searchable and provide semi-structured HTML content. No explicit license is given, thus restricted copyright. It should be noted, however, that the original copyright of several dictionaries provided via DWN has expired. Yet, database right applies to the digital edition. 
+
+\item[Westfälisches Wörterbuch (WWB)] is a comprehensive academic dictionary of Westphalian, as spoken in northwestern Germany, made available as part of the Wörterbuchnetz platform.\footnote{\url{https://woerterbuchnetz.de/}}. It provides detailed historical and etymological information in semi-structured HTML. The Wörterbuchnetz provides an API access, although only to lemma lists and full text search, not to the actual entries. No explicit license is given, thus restricted copyright.
+
+\item[NDR Plattdeutsch Wörterbuch] aims to be a general Low German dictionary and is hosted by Norddeutscher Rundfunk (NDR).\footnote{\url{https://www.ndr.de/kultur/norddeutsche_sprache/plattdeutsch/woerterbuch101.html}} Most of its content seems to be crowd-sourced, it thus contains unregulated orthographies, so that words appear in varying spellings or for different dialects. Focuses on practical and everyday vocabulary rather than linguistic precision. No explicit license is given, thus restricted copyright.
+
+\item[**Plattmakers** ([Plattmakers](https://plattmakers.de))  
+   - A **collaborative** online Low German dictionary, similar to Wiktionary.  
+   - Allows user contributions and provides translations into **High German and English**.  
+   - Covers multiple dialects with an emphasis on **modern usage**. 
+   Plattmakers is a Low German dictionary created by Marcus Buck. It covers all Low German dialects, providing translations in German, Dutch, and English. Words include regional maps and explanations in Low German. Launched in 2009
+
+
+5. **Plattdeutsches Wörterbuch Online** ([Platt-WB](https://www.platt-wb.de/))  
+   - A **dictionary portal** aggregating various Low German word lists.  
+   - Includes **synonyms, regional variants, and example sentences**.  
+   - Supports both High German → Low German and Low German → High German searches.  
+
+6. **WöWö (Wöerterbook Wöörden)**  
+   - A **Low German dictionary project**, though details about it are scarce online.  
+   - Likely a **local or community-driven** initiative.  
+
+7. **Mittelelbisches Wörterbuch** ([MEW](https://mew.uzi.uni-halle.de/artikel/25748))  
+   - A dictionary of **Middle Elbe Low German**, covering only **A–O** at present.  
+   - Part of an ongoing linguistic research project based at the University of Halle.  
+
+8. **Plattdeutsches Wörterbuch (plattdeutsches-woerterbuch.de)** ([Search](https://www.plattdeutsches-woerterbuch.de/search))  
+   - A **user-friendly online** dictionary.  
+   - Does not provide individual word pages, requiring full-text search for results.  
+
+9. **Sass’ Plattdeutsches Wörterbuch** ([Sass-Netz](https://netz.sass-platt.de/hoch-platt))  
+   - Based on **Johann Sass' Plattdeutsch dictionary**, which follows a **standardized spelling system**.  
+   - Provides **High German → Low German translations**.  
+   - One of the most widely accepted spelling systems for written Plattdeutsch.  
+
+10. **Wiktionary (Low German section)**  
+   - A **collaborative, crowd-sourced dictionary** covering multiple languages, including Low German.  
+   - Includes **definitions, pronunciation guides, etymology, and translations**.  
+   - Lacks standardization but is growing in content due to open contributions.  
+
+Each of these dictionaries plays a role in preserving and documenting Low German, catering to different needs such as historical research, modern communication, or dialect comparison.
+
+
+Low German not on LLOD, except for foreign language editions from DBnary, cf. ACoLi dictionary graphs
+
+\section{Low German Wiktionary}
+
+\section{WöWö}
+
+\section{}
+
+\end{document}
