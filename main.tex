@@ -5,14 +5,16 @@
 \author{Christian Chiarcos}
 \date{March 2025}
 
+\newcommand{\word}[1]{\textsl{#1}}
+
 \begin{document}
 
 \maketitle
 
 \section{Background}
 
-Low German or Low Saxon (Plattdeutsch or Niederdeutsch) is an independent West Germanic language historically spoken in northern Germany and the eastern Netherlands. It is distinct from both High German and Dutch, with its own grammatical structures, vocabulary, and pronunciation. Despite being related to these languages, Low German has evolved separately for centuries and retains unique linguistic features. It is thus recognized as a regional language and protected under the European Charter for Regional or Minority Languages (ECRML). 
-Historically, Low German was a major language of trade and administration, particularly during the Hanseatic League (13th–17th centuries), when it served as a lingua franca across the North and Baltic Sea regions. However, its status declined as High German became the dominant language of education, administration, and media. Today, Low German is considered endangered, as younger generations increasingly shift to High German or regional dialects of Dutch. While it still has millions of passive speakers, active speakers are far fewer, and one of the most pressing issues facing Low German today is the transmission challenge to the next generation of speakers. This includes didactic and educational material, but also basic NLP tools like spell checkers, machine translation, speech recognition, and text-to-speech systems are either completely absent or in very early stages of development. This technological gap makes it difficult to use Low German in digital communication, reducing its visibility and usability in the modern world. The absence of NLP tools also hinders academic research, automated language processing, and efforts to create digital content in Low German. 
+Low German or Low Saxon (Low German \word{Plattdüütsch}, German \word{Niederdeutsch}, \word{Niedersächsisch}) is a West Germanic language historically spoken in northern Germany and the eastern Netherlands. It is closely related to Dutch, High German and Frisian, but distinct from all of them, with its own grammatical structures, vocabulary, and pronunciation. Low German has evolved separately for centuries and retains unique linguistic features. It is thus recognized as a regional language and protected under the European Charter for Regional or Minority Languages (ECRML). 
+Historically, Low German was a major language of trade and administration, particularly during the Hanseatic League (13th–17th centuries), when it served as a lingua franca across the North and Baltic Sea regions. However, its status declined as High German became the dominant language of education, administration, and media. Today, Low German is considered endangered, as younger generations increasingly shift to High German or regional dialects of Dutch. While it still has millions of passive speakers, active speakers are far fewer, and one of the most pressing issues facing Low German today is the transmission challenge to the next generation of speakers. This includes didactic and educational material, but also basic NLP tools like spell checkers, machine translation, speech recognition, and text-to-speech systems are either completely absent or in very early stages of development. A major challenge here is the fragmentation of the modern dialects of Low German, which diverged greatly since the middle ages, both in their phonology and their grammar. This technological gap makes it difficult to use Low German in digital communication, reducing its visibility and usability in the modern world. The absence of NLP tools also hinders academic research, automated language processing, and efforts to create digital content in Low German. 
 
 Despite its challenges, Low German enjoys cultural and regional recognition. Efforts to revitalize the language include educational programs, literature, radio broadcasts, and online initiatives. However, without stronger support on many levels, the survival of Low German as a living language remains uncertain. In fact, social networks and digital language resources may play a role in transmission and revitalization of the Low German language, and indeed, this is what we see for other minority languages all over the world. 
 To preserve Low German, more work is needed to integrate it into digital spaces. Developing NLP tools, expanding online resources, and increasing its presence in modern media are crucial steps in ensuring that Low German remains a functional and thriving language for future generations. At the moment, however, even the most basic NLP resources are still lacking. For Low German, only small samples of annotated major corpora are known to exist, no parallel corpora (although translated texts can be found, mostly translated into Low German), and no machine-readable dictionaries. 
@@ -42,60 +44,57 @@ The \emph{Linguistic Linked Open Data (LLOD)} cloud is a structured network of i
 %    \item wiktionary
 %\end{itemize}
 
-A number of digital, and in parts, digital-born, dictionaries of different varieties of Low German are available online. Selected dictionaries with permissive licenses include the following:
+A number of digital, and in parts, digital-born, dictionaries of different varieties of Low German are available online. We are aware of only two digital dictionaries of Low German in Germany with permissive licenses:
+
+\begin{description}
+\item[WöWö (Wöhrner Wöör)] is a Low German dictionary for the Dithmarschen region (North Low Saxon) by Peter Neuber, originally published in print in 2001, but subsequently published as PDF and MS Office documents only.\footnote{\url{https://ditschiplatt.de/woehrner-woeoer/}}
+
+\item[Wiktionary] is a collaborative, crowd-sourced dictionary covering multiple languages, including Low German. Includes definitions, pronunciation guides, etymology, and translations. As a crowd-sourced resource, it lacks standardization, as different sets of orthographic conventions are applied by different contributors. LICENSE plus details
+
+\end{description}
 
 Additional dictionaries under restrictive (or implicit, i.e., restrictive-by-default) licenses include:
 
 \begin{description}
-\item[Digitales Wörterbuch Niederdeutsch (DWN)] is a collection of digital Low German dictionaries covering multiple dialects.\footnote{\url{https://www.niederdeutsche-literatur.de/dwn/}} It seems to be developed by a single individual only, albeit in parts in collaboration with academic partners (e.g., the Kompetenzzentrum für Niederdeutschdidaktik of the University of Greifswald, for whose Mecklenburgian dictionary it provides the technical backbone).\footnote{\url{https://länderzentrum-für-niederdeutsch.de/renate-hermann-winter-woerterbuch-nun-online/}} The dictionaries are searchable and provide semi-structured HTML content. No explicit license is given, thus restricted copyright. It should be noted, however, that the original copyright of several dictionaries provided via DWN has expired. Yet, database right applies to the digital edition. 
+\item[Sass’ Plattdeutsches Wörterbuch] (\href{https://netz.sass-platt.de/hoch-platt}{Sass-Netz})  
+    Based on Johann Sass' Plattdeutsch dictionary, which defines a standardized spelling system. Provides High German → Low German translations and is one of the most widely accepted spelling systems for written Plattdeutsch, albeit a deficient one (several sounds are systematically conflated) that also is not applicable to all varieties. In particular, the orthography lacks support for Westphalian, Eastphalian and Central Markian, whereas northern varieties (esp., North Low Saxon) can be represented more or less faithfully. Copying is explicitly restricted to private, non-commercial use. We assume that this also rules out academic usage.
+
+\item[Digitales Wörterbuch Niederdeutsch (DWN)] is a collection of digital Low German dictionaries covering multiple dialects.\footnote{\url{https://www.niederdeutsche-literatur.de/dwn/}} It seems to be developed and maintained by a single individual only, albeit in parts in collaboration with academic partners (e.g., the Kompetenzzentrum für Niederdeutschdidaktik of the University of Greifswald, for whose Mecklenburgian dictionary it provides the technical backbone).\footnote{\url{https://länderzentrum-für-niederdeutsch.de/renate-hermann-winter-woerterbuch-nun-online/}} The dictionaries are searchable and provide semi-structured HTML content. No explicit license is given, thus restricted copyright. It should be noted, however, that the original copyright of several dictionaries provided via DWN has expired. Yet, database right applies to the digital edition. 
 
 \item[Westfälisches Wörterbuch (WWB)] is a comprehensive academic dictionary of Westphalian, as spoken in northwestern Germany, made available as part of the Wörterbuchnetz platform.\footnote{\url{https://woerterbuchnetz.de/}}. It provides detailed historical and etymological information in semi-structured HTML. The Wörterbuchnetz provides an API access, although only to lemma lists and full text search, not to the actual entries. No explicit license is given, thus restricted copyright.
 
 \item[NDR Plattdeutsch Wörterbuch] aims to be a general Low German dictionary and is hosted by Norddeutscher Rundfunk (NDR).\footnote{\url{https://www.ndr.de/kultur/norddeutsche_sprache/plattdeutsch/woerterbuch101.html}} Most of its content seems to be crowd-sourced, it thus contains unregulated orthographies, so that words appear in varying spellings or for different dialects. Focuses on practical and everyday vocabulary rather than linguistic precision. No explicit license is given, thus restricted copyright.
 
-\item[**Plattmakers** ([Plattmakers](https://plattmakers.de))  
-   - A **collaborative** online Low German dictionary, similar to Wiktionary.  
-   - Allows user contributions and provides translations into **High German and English**.  
-   - Covers multiple dialects with an emphasis on **modern usage**. 
-   Plattmakers is a Low German dictionary created by Marcus Buck. It covers all Low German dialects, providing translations in German, Dutch, and English. Words include regional maps and explanations in Low German. Launched in 2009
+\item[Plattmakers] \href{https://plattmakers.de} is a collaborative online Low German dictionary, similar to Wiktionary, based on a digital-born multi-dialectal core dictionary developed by Marcus Buck in 2009. It covers all Low German dialects, providing translations in German, Dutch, and English. Lemmas are normally given in North Low Saxon or normalized to a North Low Saxon pronounciation. Words include regional maps, explanations in Low German, and cognates in High German, English and Dutch. Without an explicit license statement, the content is copyright-protected.
 
+\item[Online-Wörterbuch für ostfriesisches Plattdeutsch] (\href{https://www.platt-wb.de/}) 
+    is a dictionary portal that provides search over a dictionary for East Frisian Low German, compiled from various sources and edited by the Plattdüütskbüro der Ostfriesischen Landschaft. The dictionary is free searchable for German and Low German in both directions, and support partial matches. Without explicit license statement, it is copyright-restricted.
 
-5. **Plattdeutsches Wörterbuch Online** ([Platt-WB](https://www.platt-wb.de/))  
-   - A **dictionary portal** aggregating various Low German word lists.  
-   - Includes **synonyms, regional variants, and example sentences**.  
-   - Supports both High German → Low German and Low German → High German searches.  
+\item[Mittelelbisches Wörterbuch] (\href{https://mew.uzi.uni-halle.de/artikel/25748}{MEW})
+    A dictionary of Middle Elbe Low German, currently covering only A–O. Subject of an ongoing linguistic research project based at the University of Halle.  The dictionary is published under CC BY-NC-ND. We interpret the ND clause as prohibiting the conversion to a Linked Data representation.
 
-6. **WöWö (Wöerterbook Wöörden)**  
-   - A **Low German dictionary project**, though details about it are scarce online.  
-   - Likely a **local or community-driven** initiative.  
+\item[Platt för Plietsche; Plattdeutsch Übersetzer für Schleswig-Holstein, Hamburg, Bremen und Teilbereiche von Mecklenburg-Vorpommern und Niedersachsen] (\href{https://www.plattdeutsches-woerterbuch.de/}) provides search over a bilingual German-Low-German word list. Without explicit license statement, this is copyright-protected.
 
-7. **Mittelelbisches Wörterbuch** ([MEW](https://mew.uzi.uni-halle.de/artikel/25748))  
-   - A dictionary of **Middle Elbe Low German**, covering only **A–O** at present.  
-   - Part of an ongoing linguistic research project based at the University of Halle.  
+\end{description}
 
-8. **Plattdeutsches Wörterbuch (plattdeutsches-woerterbuch.de)** ([Search](https://www.plattdeutsches-woerterbuch.de/search))  
-   - A **user-friendly online** dictionary.  
-   - Does not provide individual word pages, requiring full-text search for results.  
+As for machine-readable dictionaries of Low German, we are not aware of any Low German lexical datasets except for Low German terms in foreign-language editions of DBnary, i.a., the database edition of the Wiktionary, also cf. ACoLi dictionary graphs
 
-9. **Sass’ Plattdeutsches Wörterbuch** ([Sass-Netz](https://netz.sass-platt.de/hoch-platt))  
-   - Based on **Johann Sass' Plattdeutsch dictionary**, which follows a **standardized spelling system**.  
-   - Provides **High German → Low German translations**.  
-   - One of the most widely accepted spelling systems for written Plattdeutsch.  
-
-10. **Wiktionary (Low German section)**  
-   - A **collaborative, crowd-sourced dictionary** covering multiple languages, including Low German.  
-   - Includes **definitions, pronunciation guides, etymology, and translations**.  
-   - Lacks standardization but is growing in content due to open contributions.  
-
-Each of these dictionaries plays a role in preserving and documenting Low German, catering to different needs such as historical research, modern communication, or dialect comparison.
-
-
-Low German not on LLOD, except for foreign language editions from DBnary, cf. ACoLi dictionary graphs
-
-\section{Low German Wiktionary}
+In addition to these dictionaries, there are many print dictionaries, also in the public domain, but not reliably digitized.
 
 \section{WöWö}
 
-\section{}
+\section{Linking the WöWö}
+
+\begin{itemize}
+    \item orthographienormalisierung mit FSTs
+    \item $\mapsto$ automatische links mit Plattmakers, DWN/Reuter, Wörterbuchnetz/Westfälisch
+    \item noch was niederländisches?
+\end{itemize}
+
+\section{Discussion}
+
+mögliche nutzung: es gibt keine dialektübergreifenden paralleltexte, aber mit verknüpften wörterbüchern könnte man multidialektale word embeddings (und, darauf aufbauend, multidialektale contextualized embeddings) induzieren. jeder der drei dialekte hat eine eigene literatur in unterschiedlichen orthographien.
+
+die daten können sich gegenseitig anreichern. wir haben definitionen und belege aus mehreren wörterbüchern. auch bei der phonologie: die vollwertige erfassung der phonologie erfordert, ein komplexes inventar von ê- und ô-Phonemen zu unterscheiden, die in keinem dialekt vollständig unterschieden werden, aber in ihrem zusammenwirken die verteilung von oo/au bzw. ee/ei in den unterschiedlichen dialekten erklären. auch bei der morphologie: nordniedersächsisch und mecklenburfisch sind apokopierend, westfälisch nicht, man bekommt also "ursprünglichere" Endungen und silben. das kann helfen, die phonologie zu klären, da "überlänge" oft nicht geschrieben wird. nochmal phonologie: plattmakers bietet IPA, alle anderen nur (mehr oder minder defektive) orthographien. dadurch ist eine disambiguierung der phonologie möglich.
 
 \end{document}
