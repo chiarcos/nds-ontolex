@@ -73,6 +73,10 @@ Additional dictionaries under restrictive (or implicit, i.e., restrictive-by-def
 
 \item[Westfälisches Wörterbuch (WWB)] is a comprehensive academic dictionary of Westphalian, as spoken in northwestern Germany, made available as part of the Wörterbuchnetz platform.\footnote{\url{https://woerterbuchnetz.de/}}. It provides detailed historical and etymological information in semi-structured HTML. The Wörterbuchnetz provides an API access, although only to lemma lists and full text search, not to the actual entries. No explicit license is given, thus restricted copyright.
 
+Referenz:
+- Westfälisches Wörterbuch, digitalisierte Fassung im Wörterbuchnetz des Trier Center for Digital Humanities, Version 01/23, <https://www.woerterbuchnetz.de/WWB>, abgerufen am 11.03.2025.
+
+
 \item[NDR Plattdeutsch Wörterbuch] aims to be a general Low German dictionary and is hosted by Norddeutscher Rundfunk (NDR).\footnote{\url{https://www.ndr.de/kultur/norddeutsche_sprache/plattdeutsch/woerterbuch101.html}} Most of its content seems to be crowd-sourced, it thus contains unregulated orthographies, so that words appear in varying spellings or for different dialects. Focuses on practical and everyday vocabulary rather than linguistic precision. No explicit license is given, thus restricted copyright.
 
 \item[Plattmakers] \href{https://plattmakers.de} is a collaborative online Low German dictionary, similar to Wiktionary, based on a digital-born multi-dialectal core dictionary developed by Marcus Buck in 2009. It covers all Low German dialects, providing translations in German, Dutch, and English. Lemmas are normally given in North Low Saxon or normalized to a North Low Saxon pronounciation. Words include regional maps, explanations in Low German, and cognates in High German, English and Dutch. Without an explicit license statement, the content is copyright-protected.
@@ -90,9 +94,17 @@ Additional dictionaries under restrictive (or implicit, i.e., restrictive-by-def
 
 - https://ereimer.net/plautdietsch/pddefns.htm
 
+
+- https://twentswoordenboek.nl/
+
 \end{description}
 
 Major dictionaries available in print only include the Berlin-Brandenburg dictionary, the Niedersächsisches Wörterbuch and the Pommersches Wörterbuch. The Wossidlo-Teuchert dictionary of Mecklenburgian is currently in the process of integration into Wörterbuchnetz.\footnote{\url{https://www.germanistik.uni-rostock.de/personen/professuren/prof-dr-andreas-bieberstedt/projekte-und-forschungsschwerpunkte/wossidlo-teuchert-online/}}
+
+More dictionaries:
+- Das Niedersächsische Wörterbuch ist bislang ebenfalls nur in print verfügbar und nur bis zum buchstaben s veröffentlicht, vgl. https://www.uni-goettingen.de/de/publikationen/219293.html
+
+
 
 As for machine-readable dictionaries of Low German, we are not aware of any Low German lexical datasets except for Low German terms in foreign-language editions of DBnary, i.a., the database edition of the Wiktionary, also cf. ACoLi dictionary graphs. However, PanDoc data is generally of mixed quality, as it is largely based on automated OCR. Wiktionary data is crowdsourced, and for a language without a written standard, this data is too unsystematic to be used and reliably linked with other lexical resources, as it freely mixes mixes regional and author-specific orthographies.
 
@@ -193,9 +205,6 @@ For the RDF export, we calculate the confidence of a link $\langle x,y\rangle$ a
     The converter has a flag to return all possible links, along with their confidence, but this is disabled by default.
 }
 
-\subsection{Linking by Formal Agreement}
-
-
 \subsection{RDF Representation}
 
 For any given link $\langle x,y\rangle$, the confidence score $c(x,y)$ is calculated as $c(x,y)=2 \frac{P(x|y) P(y|x)}{P(x|y) + P(y|x)}$. If more than one match with the same score is found, we return the one with lowest Levenshtein distance. If this is not umambiguous, we return the shortest target URL in order to create a bias against matches between multi-word expressions and their respective parts.
@@ -203,16 +212,45 @@ For any given link $\langle x,y\rangle$, the confidence score $c(x,y)$ is calcul
 For every external dictionary, we create one lexical entry per source URL, and provide the lemma form as its canonical form. These lexical entries are then linked with WöWö URLs.
 
 We produce linking files in two different flavours. The condensed format only conveys a \onto{lexinfo:geographicalVariant} link between two lexical entries. 
-However, as there is no manual quality control involved here and the automated linking procedure creates many n:m correspondences, it is preferred for provide the confidence scores, as well. 
+However, as there is no manual quality control involved here and the automated linking procedure creates many n:m correspondences, it is preferred for provide the confidence scores, as well. In this reified representation, we create 
 
 
+by default, we only return the most confident link, optionally, all links can be returned
 
+https://aclanthology.org/2023.ldk-1.4.pdf
+we follow their approach in providing a reified representation of interdialectal links, using lexinfo:category to indicate the type. Reification is necessary to indicate the confidence of our matches.
+
+there are, however, no corresponding concepts in lexinfo to indicate the type of relation. In particular, lexinfo:approximate doesn't work, because it's a sense relation, but the sense link is unconfirmed and we don't have machine-readable senses for any dictionary other than WöWö.
+
+in the end, we resort lexinfo:geographicalVariant. However, note that this is an object property, not an individual. The resulting data is thus propelled into the semantic space of OWL2/Full.
+
+Another apparent gap is the lack of a counterpart of translation set for lexico-semantic relations other than translation. In its place, we resort to  http://purl.org/dc/dcmitype/Dataset. This is needed to store provenance information (which otherwise needs to be repeated for every lexical link). Every lexical-semantic relation is linked by dct:isPartOf. 
+
+In addition, every link is complemented with a numerical confidence score. Due to the lack of a standard vocabulary for confidence scores in RDF, we adopt rdf:value for the purpose, but this is semantically underspecified. We would recommend to create a designated lexinfo property, say, lexinfo:confidence.
+
+
+In addition to the full dataset, we also provide a more compact export which uses lexinfo:geographicalVariant properties to link directly and omits provenance and confidence information. Aside from being more concise, this is also OWL2/DL-compliant. 
+
+\subsection{Language Identification}
+
+we are not fully sure about the correct classification of the Plattmakers dialect in Glottolog, but we assume it to belong to North Hanoveranian (https://glottolog.org/resource/languoid/id/nort3307), whereas the WöWö dictionary is Dithmarsch (https://glottolog.org/resource/languoid/id/dith1234). We thus use langage tags nds-x-nort3307 and nds-x-dith1234, respectively. For the Westphalian dictionary, we use the unmodified ISO 639-3 tag `wep`, because it uses an artificial, scientific spelling that aims to capture cross-dialectal differences within Westphalian.
+However, not all forms provided by Plattmakers actually originate from that region and may not even be attested there. Yet, the spelling seems to be oriented towards this specific variety.
+
+As for Reuter, we tag his language as Mecklenburg-Antepomeranian (not as Mecklenburgian), cf. https://glottolog.org/resource/languoid/id/meck1239, thus nds-x-meck1239
+
+Albeit being a dialect of Westphalian, Twents has its own ISO 693-3 code, `twd`, and it is tagged as such.
+
+
+\section{Linking by Formal Agreement}
+
+FST stuff
 
 
 
 
 
 \subsection{Results}
+
 
 By the linking, we could create links for 8001 WöWö entries, thus conforming that these to be lemma forms. This number appears to be small in comparison to the 26,713 of the WöWö in total, but to a large extent, this is due to compounds and derived forms that were included in WöWö, but not (or, at least, not as independent lemmas) in the other dictionaries. As such, we have 41 WöWö lemmas for \word{trecken} `to pull' and its derived forms in WöWö, but only 18 of these have been linked. The reason is not so much that words such as \word{rantrecken} `to pull here', \word{rintrecken} `to pull inside', \word{roptrecken} `to pull up there', \word{rövertrecken} `to pull over', \word{rumtrecken} `to pull over', or \word{ruuttrecken} `to pull out' don't exist in the other varieties, but they haven't necessarily been included in the other dictionaries because their formation follows a regular and productive morphological pattern and they don't convey a semantic meaning that cannot be deduced from its parts. In fact, any locative adverb can be combined with \word{trecken} and similar verbs of motion. The same holds true for nominal compounds, which are about as productive as in High German, but are normally not included in the other dictionaries unless they have special semantics that cannot be derived from its parts.
 
@@ -228,6 +266,27 @@ Beyond that, there are truly regional expressions or morphophonological processe
 mögliche nutzung: es gibt keine dialektübergreifenden paralleltexte, aber mit verknüpften wörterbüchern könnte man multidialektale word embeddings (und, darauf aufbauend, multidialektale contextualized embeddings) induzieren. jeder der drei dialekte hat eine eigene literatur in unterschiedlichen orthographien.
 
 die daten können sich gegenseitig anreichern. wir haben definitionen und belege aus mehreren wörterbüchern. auch bei der phonologie: die vollwertige erfassung der phonologie erfordert, ein komplexes inventar von ê- und ô-Phonemen zu unterscheiden, die in keinem dialekt vollständig unterschieden werden, aber in ihrem zusammenwirken die verteilung von oo/au bzw. ee/ei in den unterschiedlichen dialekten erklären. auch bei der morphologie: nordniedersächsisch und mecklenburfisch sind apokopierend, westfälisch nicht, man bekommt also "ursprünglichere" Endungen und silben. das kann helfen, die phonologie zu klären, da "überlänge" oft nicht geschrieben wird. nochmal phonologie: plattmakers bietet IPA, alle anderen nur (mehr oder minder defektive) orthographien. dadurch ist eine disambiguierung der phonologie möglich.
+
+
+Requirements:
+- We would like to see something like "possibleMatch", including the possibility to mark this as an unverified (and eventually, as a verified) hypothesis.
+- We would like to have an reification of lexinfo:geographicalVariant (and its sibling properties) as individuals
+- It would be good to have a standard vocabulary for confidence in OntoLex, resp., LexInfo. Prov-O does not provide a codified vocabulary for expression confidence scores, in fact, the PROV-O documentation has an example that uses a \emph{local} property to provide that information. As a result, PROV-O applications have resorted to their own properties for this purpose, e.g., nif:taIdentConf, nif:taClassConf, or nif:confidence in the NLP Interchange Format (https://nif.readthedocs.io/en/latest/prov-and-conf.html). However, these properties are designed for a different purpose (linguistic annotation, esp., for named entity recognition and entity linking), and should not be applied to lexical linking. It should be noted that confidence scores are a recurring component of lexical resources, but apparently, no standard practice has been established in that regard (e.g., https://aclanthology.org/W19-5104.pdf actually provide examples with confidence scores in their source data, but seem to exclude them from the conversion, probably due to a lack of a standard vocabulary). At the same time, this is an intensely researched (yet, not satisfyingly solved problem) in the RDF world, and one of the key motivations driving the development of RDF-star.\footnote{\url{https://www.w3.org/groups/wg/rdf-star/}}
+
+Observations:
+- Within vartrans, there is an apparent gap of a counterpart of translation sets for relations other than translations. However, introducing these for any kind of lexical-semantic relation would obfuscate the model. In fact, we did find a good work-around in dct:Dataset, and we would suggest this as a best practice for other types of lexical-semantic relations, as well. Yet, to align this approach better with the current treatment of translation( set)s, we suggest to re-define vartrans:TranslationSet as a subclass of dct:Dataset (and vartrans:trans as a subproperty of dct:hasPart) and to motivate it as such in a future revision of vartrans. This would be a backward-compatible revision that comes without any additional overhead (i.e. newly introduced concepts). A more radical alternative would be to deprecate vartrans:TranslationSet and vartrans:trans in favour of dct:Dataset and dct:hasPart (resp., its inverse, dct:isPartOf).
+
+Remark on language tags for Low German: The current ISO 639 language tags for Low German language varieties do not correspond to linguistically well-defined areas, but they involve a political dimension:
+
+- The "standard" tag for Low German is `nds`. The abbreviation alludes to the self-designation Nedersaksisch (in the Netherlands), resp., Nedersassisch (in Western parts of Germany; another self-designation in Plattdütsch, and in Eastern parts of Germany, this is the preferred self-designation). However, some areas received their own language tags, in particular, `wep` for Westphalian (in Germany), all Low German varieties in the Netherlands (albeit used alongside with nds-nl, e.g., in the Wikipedia), and Low Saxon East Frisian `frs`.\footnote{
+	The tag `frs` was introduced for `East Frisian' in ISO 693-2, but defined there merely by a name list and without extensive documentation. Subsequently, ISO 693-3 assumed that this refers to Low Saxon East Frisian, and thus introduced a novel language tag `stq' for East Frisian proper (the Frisian dialect that was largely replaced by Low Saxon East Frisian), which was assumed to be lacking. However, linguistically, Low Saxon East Frisian is a variety of North Low Saxon and probably received this assignment by error, or by analogy with the main varieties of the Frisian (not Low Saxon) language, `fry' (West Frisian) and `frr' (North Frisian).
+} Furthermore, Plautdietsch, an exile variety of Eastern Low German, formerly spoken in Russia, and now by scattered different Mennonite communities world-wide, received yet another language tag, `pdt`. Here, we take `nds' to include both North Low Saxon (in Germany) and Mecklenburg-Western Pomeranian, but to exclude Dutch, Westphalian and Low Saxon East Frisian.\footnote{
+	We make no claims about the use of language tags for varieties not covered in our sample of dictionaries, in particular, Eastphalian, North and Central Markian, Central Pomeranian, Eastern Pomeranian (extinct) and Low Prussian (extinct). Traditionally, Eastphalian, Westphalian and North Low Saxon (including the Dutch dialects) are grouped together as Western Low German, whereas Mecklenburgian, Pomeranian, Markian and Low Prussian varieties are grouped together as Eastern Low German.
+}
+
+
+Note that we excluded interlingual links, resp., additional translations, provided by the indexed dictionaries because of copyright considerations. Neither was part-pof-speech information included. Instead, we provide a purely form-based linking.
+
 
 
 It is a pity that LOD technology is not supported by Wörterbuchnetz and DWN, as these are supported by researchers working in the field, but only by the private Plattmakers site. However, we hope that we've been able to demonstrate the added value of inter-dictionary links for Low German, and this solution organically extends to any other dictionary available via DWN or Wörterbuchnetz. Also, with technologies such as JSON-LD and RDFa, both these portals can actually be easily extended to provide LOD support on their own -- and to the best we can tell with minimal changes to their current workflows.
