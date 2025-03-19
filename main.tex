@@ -1,20 +1,52 @@
-\documentclass{article}
-\usepackage{graphicx} % Required for inserting images
+% This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
+\pdfoutput=1
+% In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
+
+\documentclass[11pt]{article}
+
+% Change "review" to "final" to generate the final (sometimes called camera-ready) version.
+% Change to "preprint" to generate a non-anonymous version with page numbers.
+\usepackage[review]{acl}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{graphicx}
+
+% user definitions
 \usepackage{tikz} % for RDF graph
 \usetikzlibrary{positioning}
+\newcommand{\word}[1]{\textsl{#1}} % for quoting text
+\newcommand{\code}[1]{\texttt{#1}} % for code snippets
+\newcommand{\onto}[1]{\texttt{#1}} % for URIs in/for RDF
+
+% If the title and author information does not fit in the area allocated, uncomment the following
+%
+%\setlength\titlebox{<dim>}
+%
+% and set <dim> to something 5cm or larger.
 
 \title{Putting Low German on the Map (of Linguistic Linked Open Data)}
-\author{Christian Chiarcos, Tabea Gröger, Christian Fäth}
-\date{March 2025}
 
-\newcommand{\word}[1]{\textsl{#1}}
+\author{Christian Chiarcos \and Tabea Gröger \and Christian Fäth \\
+  Applied Computational Linguistics (ACoLi)\\
+  University of Augsburg, Germany \\
+  \texttt{first\_name.second\_name@uni-a.de}
+}
 
 \begin{document}
-
 \maketitle
-
 \begin{abstract}
-    
+This document is a supplement to the general instructions for *ACL authors. It contains instructions for using the \LaTeX{} style files for ACL conferences.
+The document itself conforms to its own specifications, and is therefore an example of what your manuscript should look like.
+These instructions should be used both for papers submitted for review and for final versions of accepted papers.
 \end{abstract}
 
 \section{Background}
@@ -370,9 +402,9 @@ Observations:
 Remark on language tags for Low German: The current ISO 639 language tags for Low German language varieties do not correspond to linguistically well-defined areas, but they involve a political dimension:
 
 - The "standard" tag for Low German is `nds`. The abbreviation alludes to the self-designation Nedersaksisch (in the Netherlands), resp., Nedersassisch (in Western parts of Germany; another self-designation in Plattdütsch, and in Eastern parts of Germany, this is the preferred self-designation). However, some areas received their own language tags, in particular, `wep` for Westphalian (in Germany), all Low German varieties in the Netherlands (albeit used alongside with nds-nl, e.g., in the Wikipedia), and Low Saxon East Frisian `frs`.\footnote{
-	The tag `frs` was introduced for `East Frisian' in ISO 693-2, but defined there merely by a name list and without extensive documentation. Subsequently, ISO 693-3 assumed that this refers to Low Saxon East Frisian, and thus introduced a novel language tag `stq' for East Frisian proper (the Frisian dialect that was largely replaced by Low Saxon East Frisian), which was assumed to be lacking. However, linguistically, Low Saxon East Frisian is a variety of North Low Saxon and probably received this assignment by error, or by analogy with the main varieties of the Frisian (not Low Saxon) language, `fry' (West Frisian) and `frr' (North Frisian).
+  The tag `frs` was introduced for `East Frisian' in ISO 693-2, but defined there merely by a name list and without extensive documentation. Subsequently, ISO 693-3 assumed that this refers to Low Saxon East Frisian, and thus introduced a novel language tag `stq' for East Frisian proper (the Frisian dialect that was largely replaced by Low Saxon East Frisian), which was assumed to be lacking. However, linguistically, Low Saxon East Frisian is a variety of North Low Saxon and probably received this assignment by error, or by analogy with the main varieties of the Frisian (not Low Saxon) language, `fry' (West Frisian) and `frr' (North Frisian).
 } Furthermore, Plautdietsch, an exile variety of Eastern Low German, formerly spoken in Russia, and now by scattered different Mennonite communities world-wide, received yet another language tag, `pdt`. Here, we take `nds' to include both North Low Saxon (in Germany) and Mecklenburg-Western Pomeranian, but to exclude Dutch, Westphalian and Low Saxon East Frisian.\footnote{
-	We make no claims about the use of language tags for varieties not covered in our sample of dictionaries, in particular, Eastphalian, North and Central Markian, Central Pomeranian, Eastern Pomeranian (extinct) and Low Prussian (extinct). Traditionally, Eastphalian, Westphalian and North Low Saxon (including the Dutch dialects) are grouped together as Western Low German, whereas Mecklenburgian, Pomeranian, Markian and Low Prussian varieties are grouped together as Eastern Low German.
+  We make no claims about the use of language tags for varieties not covered in our sample of dictionaries, in particular, Eastphalian, North and Central Markian, Central Pomeranian, Eastern Pomeranian (extinct) and Low Prussian (extinct). Traditionally, Eastphalian, Westphalian and North Low Saxon (including the Dutch dialects) are grouped together as Western Low German, whereas Mecklenburgian, Pomeranian, Markian and Low Prussian varieties are grouped together as Eastern Low German.
 }
 
 
@@ -381,5 +413,45 @@ Note that we excluded interlingual links, resp., additional translations, provid
 
 
 It is a pity that LOD technology is not supported by Wörterbuchnetz and DWN, as these are supported by researchers working in the field, but only by the private Plattmakers site. However, we hope that we've been able to demonstrate the added value of inter-dictionary links for Low German, and this solution organically extends to any other dictionary available via DWN or Wörterbuchnetz. Also, with technologies such as JSON-LD and RDFa, both these portals can actually be easily extended to provide LOD support on their own -- and to the best we can tell with minimal changes to their current workflows.
+
+% \subsection{Appendices}
+% 
+% Use \verb|\appendix| before any appendix section to switch the section numbering over to letters. See Appendix~\ref{sec:appendix} for an example.
+%
+%\section{Bib\TeX{} Files}
+%\label{sec:bibtex}
+%
+%Unicode cannot be used in Bib\TeX{} entries, and some ways of typing special characters can disrupt Bib\TeX's alphabetization. The recommended way of typing special characters is shown in Table~\ref{tab:accents}.
+%
+%Please ensure that Bib\TeX{} records contain DOIs or URLs when possible, and for all the ACL materials that you reference.
+%Use the \verb|doi| field for DOIs and the \verb|url| field for URLs.
+%If a Bib\TeX{} entry has a URL or DOI field, the paper title in the references section will appear as a hyperlink to the paper, using the hyperref \LaTeX{} package.
+
+\section*{Limitations}
+
+% Since December 2023, a "Limitations" section has been required for all papers submitted to ACL Rolling Review (ARR). This section should be placed at the end of the paper, before the references. The "Limitations" section (along with, optionally, a section for ethical considerations) may be up to one page and will not count toward the final page limit. Note that these files may be used by venues that do not rely on ARR so it is recommended to verify the requirement of a "Limitations" section and other criteria with the venue in question.
+
+The aim of the paper is to develop a proof-of-principle implementation for an LLOD-based interdialectal lexical resource for the major dialects of Modern Low German, based on linking existing lexical resources accessible over the web with an RDF conversion of a North Low Saxon dictionary (WöWö). Specific challenges encountered include the complexity of the WöWö dictionary layout, legal constraints regarding the re-usability of external resources linked and aspects of data modelling. Interdialectal linking is solely predicted on grounds of formal agreement, without taking sense information or translations into account.
+
+The primary concern of the paper is technical in nature, with a focus on normalizing divergent orthographies and phonological differences on the one hand, and on modelling issues on the other. We did not systematically assess the linguistic quality of the different dictionaries nor did we evaluate the quality of the generated links. 
+
+In the absence of training data for interlingual mapping, we implement a linguistically informed normalization by means of traditional symbolic methods, and generate candidate matches between normalized source language lemmas and normalized WöWö lemmas, ranked by a confidence score that captures the level of (formal) ambiguity in n:m mappings. While the phonological correspondences are well understood and uncontroversial, this employs solely formal criteria, and is prone to link formally similar but semantically unrelated lemmas. This can be addressed in the future in different ways, e.g., by comparing translations and definitions provided by different dictionaries. This can be implemented by different techniques, including neural methods or lexical linking of existing lexical resources for German, Dutch and English (the primary languages of definitions), but is left as a topic for future research. 
+
+
+
+
+
+
+% Bibliography entries for the entire Anthology, followed by custom entries
+%\bibliography{anthology,custom}
+% Custom bibliography entries only
+\bibliography{bib.bib}
+
+%\appendix
+%
+%\section{Example Appendix}
+%\label{sec:appendix}
+%
+%This is an appendix.
 
 \end{document}
