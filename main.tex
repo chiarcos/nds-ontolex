@@ -27,6 +27,8 @@
 \newcommand{\word}[1]{\textsl{#1}} % for quoting text
 \newcommand{\code}[1]{\texttt{#1}} % for code snippets
 \newcommand{\onto}[1]{\texttt{#1}} % for URIs in/for RDF
+\newcommand{\todo}[1]{}                                 % hide TODOs
+% \newcommand{\todo}[1]{\footnote{\huge{TODO:} #1}}     % show TODOs
 
 % special characters
 \usepackage{fontspec}
@@ -205,6 +207,7 @@ Converting the \emph{Wöhrner Wöör} into a \emph{machine readable dictionary} 
         \item {\textbf{High German Entries:}} Entries are first grouped by main lemmas. The script converts them into \texttt{ontolex:LexicalEntry} nodes, each with its own lexical sense (\texttt{ontolex:LexicalSense}). Additional information, such as synonymous terms or usage examples—but mostly plural information or alternative spellings (e.g., variations in single vowels)—is included as \texttt{ontolex:otherForm}. In the case of alternative spellings or plural information, these additions are usually not full words but only the modifications, such as the suffix '-s'. A custom property (\texttt{neuber:subEntry}) links related sublemmas. For all existing sublemmas, individual lexical entries with their own lexical senses are generated in a similar way.
         \item {\textbf{Low German Translations:}} The Low German translations are processed into lexical entries, each with its own lexical sense. If available, IPA notation is incorporated into the canonical form as \texttt{ontolex:phoneticRep}.
         \item {\textbf{Linking Translations:}} Finally, unique \texttt{vartrans:translation} entries are generated to link source senses (from main or sublemma entries) with their corresponding target senses (translations).
+    \end{enumerate}
 
     \item {\textbf{Post-Processing}}\\  
     The generated Turtle files are further refined using a regex-based clean-up. This post-processing step removes unnecessary whitespaces, replaces dashes with underscores, and normalizes punctuation to ensure that the RDF output adheres to the required naming conventions and syntactic standards.
@@ -512,7 +515,7 @@ We observed a number of potential gaps in the existing OntoLex vocabularies.
 
 In addition to this, we found some solutions for apparent OntoLex gaps, but these may entail future simplifications of OntoLex.
 As such, there is an apparent gap of a counterpart of translation sets for relations other than translations in OntoLex-VarTrans. 
-However, introducing these for any kind of lexical-semantic relation would obfuscate the model. In fact, we did find a good work-around in \dct:Dataset, and we would suggest this as a best practice for other types of lexical-semantic relations, as well. Yet, to align this approach better with the current treatment of translation( set)s, we suggest to re-define \onto{vartrans:TranslationSet} as a subclass of \onto{dct:Dataset} (and \onto{vartrans:trans} as a subproperty of \onto{dct:hasPart}) and to motivate it as such in a future revision of the VarTrans module. This would be a backward-compatible revision that comes without any additional overhead (i.e. newly introduced concepts). A more radical alternative would be to deprecate \onto{vartrans:TranslationSet} and \onto{vartrans:trans} in favour of \onto{dct:Dataset} and \onto{dct:hasPart} (resp., its inverse, \onto{dct:isPartOf}.
+However, introducing these for any kind of lexical-semantic relation would obfuscate the model. In fact, we did find a good work-around in \onto{dct:Dataset}, and we would suggest this as a best practice for other types of lexical-semantic relations, as well. Yet, to align this approach better with the current treatment of translation( set)s, we suggest to re-define \onto{vartrans:TranslationSet} as a subclass of \onto{dct:Dataset} (and \onto{vartrans:trans} as a subproperty of \onto{dct:hasPart}) and to motivate it as such in a future revision of the VarTrans module. This would be a backward-compatible revision that comes without any additional overhead (i.e. newly introduced concepts). A more radical alternative would be to deprecate \onto{vartrans:TranslationSet} and \onto{vartrans:trans} in favour of \onto{dct:Dataset} and \onto{dct:hasPart} (resp., its inverse, \onto{dct:isPartOf}.
 
 Finally, a remark on language tags for Low German: 
 The current ISO 639 language tags for Low German language varieties do not correspond to linguistically well-defined areas, but they involve a political dimension.
@@ -520,7 +523,7 @@ In particular, all regional dialects of Low German in the Netherlands have their
 With two `major' language tags applied to West Low German (\code{nds} and \code{wep}; plus \code{frs} for Low Saxon East Frisian), it has also become unclear how to properly identify East Low German. Glottolog.org resorted to redefine \code{nds} as `East Low German' and to address all non-Westphalian varieties of West Low German as \code{frs} -- although this is defined as `(Low Saxon) East Frisian'.\footnote{
   The tag \code{frs} was introduced for `East Frisian' in ISO 693-2, but defined there merely by a name list and without extensive documentation. Subsequently, ISO 693-3 assumed that this refers to Low Saxon East Frisian, and thus introduced a novel language tag \code{stq} for East Frisian proper (the Frisian dialect that was largely replaced by Low Saxon East Frisian), which was assumed to be lacking. However, linguistically, Low Saxon East Frisian is a variety of North Low Saxon and probably received this assignment by error, or by analogy with the main varieties of the Frisian (non-Low Saxon) language, \code{fry} (West Frisian) and \code{frr} (North Frisian).
 } In the reality of the web, however, \code{nds} is used for Westphalian and North Low Saxon varieties of the Netherlands (e.g., in the Dutch Low German Wikipedia), as well as North Low Saxon in Germany (in the [German] Low German Wikipedia, written in accordance with Sass, i.e., \code{nds-x-hols1234} for Holstein North Low Saxon, albeit as an orthographic standard, not as a standard variety).\footnote{
-    \url{https://nds.wikipedia.org/wiki/Wikipedia:Platt,_wo_schriev_ik_dat%3F}
+    \url{https://nds.wikipedia.org/wiki/Wikipedia:Platt,_wo_schriev_ik_dat\%3F}
 }
 Here, we take \code{nds} to include all parts of North Low Saxon (in Germany) and Mecklenburg-Western Pomeranian, but to exclude Dutch Low German, Westphalian and Low Saxon East Frisian.\footnote{
   We make no claims about the use of language tags for varieties not covered in our sample of dictionaries, in particular, Eastphalian, North and Central Markian, Central Pomeranian, Eastern Pomeranian (extinct) and Low Prussian (extinct). Traditionally, Eastphalian, Westphalian and North Low Saxon (including the Dutch dialects) are grouped together as Western Low German, whereas Mecklenburgian, Pomeranian, Markian and Low Prussian varieties are grouped together as Eastern Low German.
