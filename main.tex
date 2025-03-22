@@ -1,5 +1,6 @@
 % This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
-\pdfoutput=1
+% \pdfoutput=1
+
 % In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
 
 \documentclass[11pt]{article}
@@ -26,6 +27,21 @@
 \newcommand{\word}[1]{\textsl{#1}} % for quoting text
 \newcommand{\code}[1]{\texttt{#1}} % for code snippets
 \newcommand{\onto}[1]{\texttt{#1}} % for URIs in/for RDF
+
+% special characters
+\usepackage{fontspec}
+\newfontfamily\ipafont{Doulos SIL}
+\DeclareTextFontCommand{\textipafont}{\ipafont}
+\usepackage{newunicodechar}
+\newunicodechar{ɛ}{\textipafont{ɛ}}
+\newunicodechar{ɔ}{\textipafont{ɔ}}
+\newunicodechar{ª}{\textipafont{ª}}
+\newunicodechar{ɐ}{\textipafont{ɐ}}
+\newunicodechar{ʒ}{\textipafont{ʒ}}
+\newunicodechar{ʃ}{\textipafont{ʃ}}
+
+% compiler timeout
+% \usepackage{arcs}
 
 % If the title and author information does not fit in the area allocated, uncomment the following
 %
@@ -55,8 +71,8 @@ at different levels of maturity), but it not only lacks a written standard, but 
 
 We would argue here that what is needed to develop effective NLP support for Low German is a digital Rosetta stone that allows us to leverage materials from different language varieties and to access them in a uniform way, e.g., using a common normalization. As for this normalization, however, this cannot be easily achieved by enforcing the adherence to a standard variety, as this is largely rejected by the speaker community. So, instead of creating an artificial normalization, we focus on technologies to complement dialect specific resources or texts, by creating links between regional dictionaries, and by providing a mapping routine to identify formally corresponding words in different dialects.
 
-Low German or Low Saxon (Low German \word{Plattdüütsch}, German \word{Niederdeutsch}, \word{Niedersächsisch}) is a West Germanic language historically spoken in northern Germany and the eastern Netherlands. It is closely related to Dutch, High German and Frisian, but distinct from all of them, with its own grammatical structures, vocabulary, and pronunciation. Low German has evolved separately for centuries and retains unique linguistic features. It is thus recognized as a regional language and protected under the European Charter for Regional or Minority Languages (ECRML). 
-Historically, (Middle) Low German was a major language of trade and administration, particularly during the Hanseatic League (13th–17th centuries), when it served as a lingua franca across the North and Baltic Sea regions. However, its status declined, with High German (resp., in the Netherlands, Dutch), as the dominant language of education, administration, and media. Today, Low German is considered endangered, and the 19th and 20thj c. have seen younger generations increasingly shifting to the respective national languages. While it still has millions of passive speakers, active speakers are far fewer, and one of the most pressing issues facing Low German today is the transmission challenge to the next generation of speakers. This includes didactic and educational material, but also basic NLP tools like spell checkers, machine translation, speech recognition, and text-to-speech systems are either completely absent or in very early stages of development. A major challenge here is the fragmentation of the modern dialects of Low German, which diverged greatly since the middle ages, both in their phonology and their grammar. Individual dialects are primarily defined by their distinct and specific development of Middle Low German vowels, with regional changes in their quality (esp., diphthongization and monophthongization processes) and quantity (length). Some, mostly northern, dialects lost the unvoiced vowels of Middle Low German (and, as a result, abandoned large swaths of their nominal and verbal morphology), while others retained them (along with the four case nominal morphology and the subjunctive present). Whereas this north-south division is the result of developments that occurred mostly between 1600 and 1850, there also exists an west-east division that reflects the eastwards expansion of Low German during the Middle Ages, with Western dialects spoken in the same area as Old Saxon (and morphologically marked by a uniform verbal plural in \word{-(e)t}) and Eastern dialects spoken in the area that was colonized after the 12th c. (and morphologically marked by a verbal plural in \word{-en}). Although the dialects east of the river Oder effectively ceased to be spoken after WWII, (Eastern) Low German persists in emmigrant varieties originally spoken in areas in modern Poland (Pomerano, a regionally recognized minority language in Brazil) and Russia (Plautdietsch, spoken by a Mennonite community dispersed world-wide). 
+Low German or Low Saxon (self-designation \word{Plattdüütsch}) is a West Germanic language historically spoken in northern Germany and parts of the Netherlands. It is closely related to Dutch, High German and Frisian, but distinct from all of them, with its own grammatical structures, vocabulary, and pronunciation. Low German has evolved separately for centuries and retains unique linguistic features. It is thus recognized as a regional language and protected under the European Charter for Regional or Minority Languages (ECRML). 
+Historically, (Middle) Low German was a major language of trade and administration, particularly during the Hanseatic League (13th–17th centuries), when it served as a lingua franca across the North and Baltic Sea regions. However, its status declined, with High German (resp., in the Netherlands, Dutch) replacing it as the dominant language of education, administration, and media. Today, Low German is considered threatened (vulnerable) \cite[p.25]{moseley2010atlas}, and the 19th and 20th c. have seen younger generations increasingly shifting to the respective national languages. While it still has millions of passive speakers, active speakers are far fewer, and one of the most pressing issues facing Low German today is the transmission challenge to the next generation of speakers. This includes didactic and educational material, but also basic NLP tools like spell checkers, machine translation, speech recognition, and text-to-speech systems are either completely absent or in very early stages of development. A major challenge here is the fragmentation of the modern dialects of Low German, which diverged greatly since the middle ages, both in their phonology and their grammar. Individual dialects are primarily defined by their distinct and specific development of Middle Low German vowels, with regional changes in their quality (esp., diphthongization and monophthongization processes) and quantity (length). Some, mostly northern, dialects lost the unvoiced vowels of Middle Low German (and, as a result, abandoned large swaths of their nominal and verbal morphology), while others retained them (along with the four case nominal morphology and the subjunctive present). Whereas this north-south division is the result of developments that occurred mostly between 1600 and 1850, there also exists an west-east division that reflects the eastwards expansion of Low German during the Middle Ages, with Western dialects spoken in the same area as Old Saxon (and morphologically marked by a uniform verbal plural in \word{-(e)t}) and Eastern dialects spoken in the area that was colonized after the 12th c. (and morphologically marked by a verbal plural in \word{-en}). Although the dialects east of the river Oder effectively ceased to be spoken after WWII, (Eastern) Low German persists in emmigrant varieties originally spoken in areas in modern Poland (Pomerano, a regionally recognized minority language in Brazil), Ukraine and Russia (Plautdietsch, primarily spoken by the Mennonite diaspora in the Americas). 
 As a result of this particularization, there is no accepted standard variety, and, in fact, this has been acknowledged in information technology by awarding different regional varieties of Low German (ISO 639-2 language code \code{nds}) their own ISO 639-3 identifiers (see Tab. \ref{tab-dialects-and-isocodes} for the major varieties being spoken today). This technological gap makes it difficult to use Low German in digital communication, reducing its visibility and usability in the modern world. The absence of NLP tools also hinders academic research, automated language processing, and efforts to create digital content in Low German. 
 
 \begin{table}
@@ -94,28 +110,19 @@ The \emph{Linguistic Linked Open Data (LLOD)} cloud is a structured network of i
 %    \item wiktionary
 %\end{itemize}
 
-A number of digital, and in parts, digital-born, dictionaries of different varieties of Low German are available online. We are aware of only two digital dictionaries of Low German in Germany with permissive licenses:
+A number of digital, and in parts, digital-born, dictionaries of different varieties of Low German are available online. As far as Germany is concerned, the only digital Low German dictionary with a permissive license we are aware of is Wiktionary, a collaborative, crowd-sourced dictionary covering multiple languages, including Low German. Includes definitions, pronunciation guides, etymology, and translations. As a crowd-sourced resource, it lacks standardization, as different sets of orthographic conventions are applied by different contributors. Another, digital-born dictionary -- although only available in MS Office and PDF formats -- is Wöhrner Wöör (WöWö), a Low German dictionary for the Dithmarschen variety of North Low Saxon by Peter Neuber, originally published in print in 2001, but subsequently published as PDF and MS Office documents only.\footnote{\url{https://ditschiplatt.de/woehrner-woeoer/}} 
+With permission of the author, % WHICH WE DON'T HAVE YET
+we use this as the basis for our efforts.
 
-\begin{description}
-\item[Wöhrner Wöör (WöWö)] is a Low German dictionary for the Dithmarschen region (North Low Saxon) by Peter Neuber, originally published in print in 2001, but subsequently published as PDF and MS Office documents only.\footnote{\url{https://ditschiplatt.de/woehrner-woeoer/}}
-
-\item[Wiktionary] is a collaborative, crowd-sourced dictionary covering multiple languages, including Low German. Includes definitions, pronunciation guides, etymology, and translations. As a crowd-sourced resource, it lacks standardization, as different sets of orthographic conventions are applied by different contributors. LICENSE plus details
-
-\end{description}
-
-Additional dictionaries under restrictive (or implicit, i.e., restrictive-by-default) licenses include:
+Other digital dictionaries of Low German are available under restrictive (or implicit, i.e., restrictive-by-default) licenses include the following:
 
 \begin{description}
 \item[Sass’ Plattdeutsches Wörterbuch] (\href{https://netz.sass-platt.de/hoch-platt}{Sass-Netz})  
     Based on Johann Sass' Plattdeutsch dictionary, which defines a standardized spelling system. Provides High German → Low German translations and is one of the most widely accepted spelling systems for written Plattdeutsch, albeit a deficient one (several sounds are systematically conflated) that also is not applicable to all varieties. In particular, the orthography lacks support for Westphalian, Eastphalian and Central Markian, whereas northern varieties (esp., North Low Saxon) can be represented more or less faithfully. Copying is explicitly restricted to private, non-commercial use. We assume that this also rules out academic usage.
 
-\item[Digitales Wörterbuch Niederdeutsch (DWN)] is a collection of digital Low German dictionaries covering multiple dialects.\footnote{\url{https://www.niederdeutsche-literatur.de/dwn/}} It seems to be developed and maintained by a single individual only, albeit in parts in collaboration with academic partners (e.g., the Kompetenzzentrum für Niederdeutschdidaktik of the University of Greifswald, for whose Mecklenburgian dictionary it provides the technical backbone).\footnote{\url{https://länderzentrum-für-niederdeutsch.de/renate-hermann-winter-woerterbuch-nun-online/}} The dictionaries are searchable and provide semi-structured HTML content. No explicit license is given, thus restricted copyright. It should be noted, however, that the original copyright of several dictionaries provided via DWN has expired. Yet, database right applies to the digital edition. 
+\item[Digitales Wörterbuch Niederdeutsch (DWN)] is a collection of digital Low German dictionaries covering multiple dialects.\footnote{\url{https://www.niederdeutsche-literatur.de/dwn/}} It seems to be developed and maintained by a single individual only, albeit in parts in collaboration with academic partners (e.g., the Kompetenzzentrum für Niederdeutschdidaktik of the University of Greifswald, for whose Mecklenburgian dictionary it provides the technical backbone).\footnote{\url{https://länderzentrum-für-niederdeutsch.de/renate-hermann-winter-woerterbuch-nun-online/}} The dictionaries are searchable and provide semi-structured HTML content. No explicit license is given, thus restricted copyright. It should be noted, however, that the original copyright of several dictionaries provided via DWN has expired. Yet, database right applies to the digital edition. Aside from an all-over Low German dictionary compiled from diverse sources, it also provides regional dictionaries.
 
-\item[Westfälisches Wörterbuch (WWB)] is a comprehensive academic dictionary of Westphalian, as spoken in northwestern Germany, made available as part of the Wörterbuchnetz platform.\footnote{\url{https://woerterbuchnetz.de/}}. It provides detailed historical and etymological information in semi-structured HTML. The Wörterbuchnetz provides an API access, although only to lemma lists and full text search, not to the actual entries. No explicit license is given, thus restricted copyright.
-
-Referenz:
-- Westfälisches Wörterbuch, digitalisierte Fassung im Wörterbuchnetz des Trier Center for Digital Humanities, Version 01/23, <https://www.woerterbuchnetz.de/WWB>, abgerufen am 11.03.2025.
-
+\item[Westfälisches Wörterbuch (WWB)] is a comprehensive academic dictionary of Westphalian, as spoken in northwestern Germany, made available as part of the Wörterbuchnetz platform \cite{wwb}.\footnote{\url{https://woerterbuchnetz.de/}}. It provides detailed historical and etymological information in semi-structured HTML. The Wörterbuchnetz also provides an API access, although only to lemma lists and full text search, not to the actual entries. No explicit license is given, thus restricted copyright.
 
 \item[NDR Plattdeutsch Wörterbuch] aims to be a general Low German dictionary and is hosted by Norddeutscher Rundfunk (NDR).\footnote{\url{https://www.ndr.de/kultur/norddeutsche_sprache/plattdeutsch/woerterbuch101.html}} Most of its content seems to be crowd-sourced, it thus contains unregulated orthographies, so that words appear in varying spellings or for different dialects. Focuses on practical and everyday vocabulary rather than linguistic precision. No explicit license is given, thus restricted copyright.
 
@@ -133,7 +140,7 @@ Referenz:
 
 \end{description}
 
-Major dictionaries available in print only include the Berlin-Brandenburg dictionary, the Niedersächsisches Wörterbuch and the Pommersches Wörterbuch. The Wossidlo-Teuchert dictionary of Mecklenburgian is currently in the process of integration into Wörterbuchnetz.\footnote{\url{https://www.germanistik.uni-rostock.de/personen/professuren/prof-dr-andreas-bieberstedt/projekte-und-forschungsschwerpunkte/wossidlo-teuchert-online/}}
+Major dictionaries available in print (or PDF) only include the Berlin-Brandenburg dictionary, the Niedersächsisches Wörterbuch, the Pommersches Wörterbuch, the Schleswig-Holsteinisches Wörterbuch \cite{mensingotto}. The Wossidlo-Teuchert dictionary of Mecklenburgian is currently in the process of integration into Wörterbuchnetz.\footnote{\url{https://www.germanistik.uni-rostock.de/personen/professuren/prof-dr-andreas-bieberstedt/projekte-und-forschungsschwerpunkte/wossidlo-teuchert-online/}}
 
 More dictionaries:
 - Das Niedersächsische Wörterbuch ist bislang ebenfalls nur in print verfügbar und nur bis zum buchstaben s veröffentlicht, vgl. https://www.uni-goettingen.de/de/publikationen/219293.html
@@ -195,7 +202,7 @@ Converting the \emph{Wöhrner Wöör} into a \emph{machine readable dictionary} 
     \item {\textbf{Generating RDF (Turtle Format)}}\\ 
     Separate Python scripts convert the structured CSV data into RDF using the Turtle syntax:
     \begin{enumerate}
-        \item {\textbf{High German Entries:}} Entries are first grouped by main lemmas. The script converts them into \texttt{ontolex:LexicalEntry} nodes, each with its own lexical sense (\texttt{ontolex:LexicalSense}). Additional information, such as plural forms are included as \texttt{ontolex:otherForm}. A custom property (\texttt{neuber:subEntry}) links related sublemmas. For all existing sublemmas, individual lexical entries with their own lexical senses are generated in a similar way.
+        \item {\textbf{High German Entries:}} Entries are first grouped by main lemmas. The script converts them into \texttt{ontolex:LexicalEntry} nodes, each with its own lexical sense (\texttt{ontolex:LexicalSense}). Additional information, such as synonymous terms or usage examples—but mostly plural information or alternative spellings (e.g., variations in single vowels)—is included as \texttt{ontolex:otherForm}. In the case of alternative spellings or plural information, these additions are usually not full words but only the modifications, such as the suffix '-s'. A custom property (\texttt{neuber:subEntry}) links related sublemmas. For all existing sublemmas, individual lexical entries with their own lexical senses are generated in a similar way.
         \item {\textbf{Low German Translations:}} The Low German translations are processed into lexical entries, each with its own lexical sense. If available, IPA notation is incorporated into the canonical form as \texttt{ontolex:phoneticRep}.
         \item {\textbf{Linking Translations:}} Finally, unique \texttt{vartrans:translation} entries are generated to link source senses (from main or sublemma entries) with their corresponding target senses (translations).
 
@@ -205,18 +212,60 @@ Converting the \emph{Wöhrner Wöör} into a \emph{machine readable dictionary} 
 
 This comprehensive pipeline successfully transforms the fragmented docx format of the \emph{Wöhrner Wöör} into a coherent RDF dataset, aligning the dictionary with the Ontolex-Lemon model. [Making it possible to integrate it into the Linguistic Linked Open Data (LLOD) ecosystem?]. So far, this extraction process has focused on retrieving the most essential information—lexical entries, written and phonetic representations, and their corresponding translations. However, the \emph{Wöhrner Wöör} contains numerous additional details for each entry, such as references and usage examples, which are more challenging to extract due to the complexity of the fragmented formatting.
 
-*image RDF graph Aal example*
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{aal-rdf-graph.png}
+    \caption{Enter Caption}
+    \label{fig:enter-label}
+\end{figure}
+
+%digraph finite_state_machine {
+%    rankdir=UD;
+%    size="8,5"
+%    node [shape=box, fontname="CMU Serif"];
+%        edge [fontname="CMU Serif", fontsize=11];
+%
+%        Aal [label=":Aal_de"];
+%        Aal_canonicalForm [label="a ontolex:Form"];
+%        Aal_sense [label=":Aal_de_sense"];
+%        translation_aal_ool [label=":translation_aal_ool"];
+%        Ool [label=":Ool"];
+%        Ool_canonicalForm [label="a ontolex:Form"];
+%        Ool_sense [label=":Ool_nds_sense"];
+%        Ool_otherForm [label="a ontolex:Form"];
+%
+%        Aal -> "'de'" [label = "lime:language"];
+%        Aal -> Aal_canonicalForm [label = "ontolex:canonicalForm"];
+%        Aal -> Aal_sense [label = "ontolex:sense"];
+%        translation_aal_ool -> Aal_sense [label = "vartrans:source"];
+%        translation_aal_ool -> Ool_sense [label = "vartrans:target"];
+%        Ool -> Ool_canonicalForm [label = "ontolex:canonicalForm"];
+%        Ool -> Ool_sense [label = "ontolex:sense"];
+%        Ool -> Ool_otherForm [label = "ontolex:otherForm"];
+%        Ool -> "'nds'" [label = "lime:language"];
+%        Aal_canonicalForm -> "'Aal'@de" [label = "ontolex:writtenRep"];
+%        Ool_canonicalForm -> "'Ool'@nds" [label = "ontolex:writtenRep"];
+%        Ool_canonicalForm -> "'[o:l]'@nds-fonipa" [label = "ontolex:phoneticRep"];
+%        Ool_otherForm -> "'-s'@nds" [label = "ontolex:writtenRep"];
+%
+%        "'de'" [shape=none];
+%        "'nds'" [shape=none];
+%        "'Aal'@de" [shape=none];
+%        "'Ool'@nds" [shape=none];
+%        "'-s'@nds" [shape=none];
+%        "'[o:l]'@nds-fonipa" [shape=none];
+%}
 
 \section{Linking the WöWö}
 
 A number of online dictionaries for Low German are available, but usually not under permissive licenses. As a result, we focus on the WöWö dictionary as our primary dataset, and do currently not provide Linked Data editions of other Low German dictionaries. However, these are accessible online, usually with URIs identifying the respective lemma, and we use only \emph{this information} (the existence of a lemma and the assignment of a particular URL) to create an index for these in RDF. We neither apply nor use any specific information from the dictionaries other than the existence of a lemma, we assume that this information does not meet the threshold of originality legally required for copyright to apply,\footnote{See \citet{Margoni2016} for the threshold of originality in EU copyright law.}
 so that these LOD indices to other Low German dictionaries can be published as addenda to the WöWö dataset regardless of the licensing situation of the full data sets. However, should these respective resources be ever served as Linked Data or be made accessible under a more permissive license, the information from the indices/links we provide can be seamlessly integrated into the respective dictionaries.
 
-At the moment, however, any of the dictionaries we are going to work with are perfect silos, in the sense that they are isolated from any other content available on the web. Yet, this does not mean that they do not contain links. In fact, \emph{several} of the existing platforms have been \emph{designed} to provide inter-dialectal links, resp., links between different dictionaries, but they do so my means of platform-specific technologies. 
+At the moment, however, any of the dictionaries we are going to work with are perfect silos, in the sense that they are isolated from any other content available on the web. Yet, this does not mean that they do not contain links. In fact, \emph{several} of the existing platforms have been \emph{designed} to provide inter-dialectal links, resp., links between different dictionaries, but they only provide links \emph{within} the respective ecosystem, whereas we pursue an open, extensible approach capable of integrating \emph{any} piece of information accessible on the web. 
 
 \begin{itemize}
 \item The Trier Wörterbuchnetz\footnote{\url{https://woerterbuchnetz.de/}} is an online platform that provides access to a wide range of dictionaries of historical and regional vernaculars from Germany, including dictionaries for historical stages and dialects of German and related varieties, but also dictionaries of Latin, Ladin, Uighur and Russian. In addition, it comprises a major dictionary of the Westphalian dialect of Low German. Aside from basic search, it provides links between languages of related varieties. This includes bibliographical references, but also HTML hyperlinks. Overall, the Wörterbuchnetz builds on a mature stack of XML technologies established during the past two decades. The platform and its content are freely accessible online, and in addition to the human-readable content, there also exists an API that can be used to retrieve lists of lemmata and their attestations. The content itself, however, is not provided in a machine-readable form. Within the Wörterbuchnetz, however, hyperlinks are limited to resources provided by the Wörterbuchnetz itself. It is thus not possible to perform inter-dialectal search for different varieties of Low German within that platform directly. This might change with a project targeted towards integrating major Low German dictionaries into the Wörterbuchnetz currently pursued at the University of Rostock, Germany, but then, again, the existing Wörterbuchnetz technology will only be able to provide links between these resources, but not between them and other dictionaries.
-\item The Digitales Wörterbuch Niederdeutsch (DWN)\footote{\url{https://www.niederdeutsche-literatur.de/dwn/}} by Peter Hansen is a website that provides access to a `basis' Low German dictionary (adopting spelling rules developed for North Low Saxon), a dictionary for Mecklenburgian-Western Pomeranian as well as custom dictionaries for major authors (Klaus Groth, Fritz Reuter and John-Brinckman Wörterbuch). Each dictionary comes with its own search dialog, and little is known about the technical details, as only a human-readable HTML rendering is accessible. Within each dictionary, lemmata are linked across these datasets with HTML links. We presume that this uses standard SQL technology. Again, no links to external resources are being provided.
+\item The Digitales Wörterbuch Niederdeutsch (DWN)\footnote{\url{https://www.niederdeutsche-literatur.de/dwn/}} by Peter Hansen is a website that provides access to a `basis' Low German dictionary (adopting spelling rules developed for North Low Saxon), a dictionary for Mecklenburgian-Western Pomeranian as well as custom dictionaries for major authors (Klaus Groth, Fritz Reuter and John-Brinckman Wörterbuch). Each dictionary comes with its own search dialog, and little is known about the technical details, as only a human-readable HTML rendering is accessible. Within each dictionary, lemmata are linked across these datasets with HTML links. We presume that this uses standard SQL technology. Again, no links to external resources are being provided.
 As the content is copyright-protected, we decided to work only with one of these dictionaries \citep{muller1904reuter}, whose content actually goes back to a print dictionary in the public domain. So, we did not exploit the interdialectal links provided by the DWN, nor did we use any of its original content.
 \item Plattmakers\footnote{
     \url{https://plattmakers.de/de}
@@ -313,13 +362,23 @@ Another apparent gap in LexInfo is the lack of a counterpart of translation set 
 
 \subsection{Language Identification}
 
-we are not fully sure about the correct classification of the Plattmakers dialect in Glottolog, but we assume it to belong to North Hanoveranian (https://glottolog.org/resource/languoid/id/nort3307), whereas the WöWö dictionary is Dithmarsch (https://glottolog.org/resource/languoid/id/dith1234). We thus use langage tags nds-x-nort3307 and nds-x-dith1234, respectively. For the Westphalian dictionary, we use the unmodified ISO 639-3 tag `wep`, because it uses an artificial, scientific spelling that aims to capture cross-dialectal differences within Westphalian.
-However, not all forms provided by Plattmakers actually originate from that region and may not even be attested there. Yet, the spelling seems to be oriented towards this specific variety.
+We provide fine-grained, dialect-level language tags for the different varieties. For this purpose, we use the most fine-grained ISO 639-3 language identifier applicable (or, if no dialect-specific ISO 639-3 language tag is defined, we resort to the language tag \code{nds} as understood in ISO 639-2).\footnote{
+    The language tag \code{nds} is also included in ISO 639-3 for `Low German / Low Saxon', but its scope in ISO 639-3 is uncertain, as a number of Low German dialects (but not all) are assigned individual language tags, but the remaining `\code{nds}' dialects do not correspond to a linguistically well-defined dialect group.
+} 
+% for dialect identification we use https://de.wikipedia.org/wiki/Schleswigsch#/media/Datei:Verbreitungsgebiet_der_heutigen_niederdeutschen_Mundarten-2.PNG
+Where applicable, these language tags are combined with Glottolog identifiers,\footnote{\url{https://glottolog.org}} marked as a private-use subtag (i.e., separated by \code{-x-}) in accordance with BCP47.\footnote{\url{https://www.rfc-editor.org/info/bcp47}}, so we use 
+\code{nds-x-dith1234} (Dithmarsh) for WöWö,
+\code{nds-x-nort3307} (North Hanoveranian) for Plattmakers,
+\code{nds-x-hols1234} (Holsteinian) for Sass,\footnote{
+    Sass aims to be a multidilectal dictionaries, but their spelling conventions originate from the work of Johann Hinrich Fehrs, a speaker of Holsteinian North Low Saxon
+}
+\code{nds-x-meck1239} (Mecklenburg-Western Pomeranian) for Reuter,
+\code{wep} for the Westphalian dictionary,
+    %, we use the unmodified ISO 639-3 tag `wep`, because it uses an artificial, scientific spelling that aims to capture cross-dialectal differences within Westphalian.
+\code{twt} for Twents, and
+\code{pdt} for Plautdietsch.
 
-As for Reuter, we tag his language as Mecklenburg-Antepomeranian (not as Mecklenburgian), cf. https://glottolog.org/resource/languoid/id/meck1239, thus nds-x-meck1239
-
-Albeit being a dialect of Westphalian, Twents has its own ISO 693-3 code, `twd`, and it is tagged as such.
-
+Despite the dialect identification, we would like to point out that not all lexemes included in Plattmakers and Sass actually originate from that region and may not even be attested there. Here, the language tag only indicates the spelling conventions adopted in accordance with those of a specific variety.
 
 \section{Linking by Formal Agreement}
 \label{sec-linking-by-agreement}
@@ -340,21 +399,25 @@ On the phonological level, Low German dialects differ primarily in their vowel s
 \item apocope and syncope: esp. in Northern dialects, unvoiced Middle Low German short vowels have been lost. North Markian is very systematic in the application of apocope and syncope.\footnote{
     There have been approaches to provide an orthographic normalization towards dialects without apocope (esp. \url{https://skryvwyse.eu}), but computationally speaking, the random insertion of vowels into dialect forms with apocope and syncope is less tractable than the deletions of vowels from dialects without.
 }
-\item other contextual assimilations, e.g., before r, so we find \word{Barg} (Reuter, Twents, Plattmakers /ba͡ɐç/), along with \word{bearg} (Twents), \word{Boªrg} (Westphalian) and \word{Boajch} (Plautdietsch),  `mountain', normalized to \code{berg}. From Low Prussian, Plautdietsch inherited the contextual lowering of short vowels, so that we find \word{au} /ɔ:/ in place of \word{e} (\word{Aulfenbeen} `ivory', cf. High German \word{Elfenbein}), \word{e} in place of \word{i} (\word{jlebbrijch} `slippy', WöWö \word{glibberig}), etc.
+\item other contextual assimilations, e.g., before r, so we find \word{Barg} (Reuter, Twents, Plattmakers 
+/baɐç/), 
+% /b\overarc{aɐ}ç/), % compiler timeout
+along with \word{bearg} (Twents), \word{Boªrg} (Westphalian) and \word{Boajch} (Plautdietsch),  `mountain', normalized to \code{berg}. From Low Prussian, Plautdietsch inherited the contextual lowering of short vowels, so that we find \word{au} /ɔ:/ in place of \word{e} (\word{Aulfenbeen} `ivory', cf. High German \word{Elfenbein}), \word{e} in place of \word{i} (\word{jlebbrijch} `slippy', WöWö \word{glibberig}), etc.
 \end{itemize}
 
-Another set of regional differences pertains to /s/ and /ſ/:
+Another set of regional differences pertains to /s/ and /ʃ/:
 
 \begin{itemize}
-    \item /sk/ $\sim$ /ſ/: We find Westphalian \word{wisken} `to wish' along with WöWö \word{wischen}, normalized to \code{S} for North Markian /ſ/.
-    \item /s/ $\sim$ /ſ/ before vowels: We find Plautdietsch \word{schlape} `to sleep' along with WöWö \word{slopen}, normalized to \code{S} for North Markian /ſ/.
-    \item /ſ/ $\sim$ [ʒ]: In loan words, most Low German varieties normalize foreign /ʒ/ to /ſ/. Under Slavic influence, /ʒ/ was established as independent phoneme in Plautdietsch, thus Plautdietsch \word{rüzhe} `the sound of water falling' alongside WöWö \word{ruuschen}, normalized to \code{S} for North Markian /ſ/.
-    \item [z] $\sim$ /s/: For most Low German dialects, voiced [z] is an allophone of /s/ and thus not distinguished in orthography. In Dutch-based orthography, it is nevertheless orthographically distinguished, hence Twents \word{zitte} `manner' alongside WöWö \word{Sitt}. Normalized to /s/.
+    \item /sk/ $\sim$ /ʃ/: We find Westphalian \word{wisken} `to wish' along with WöWö \word{wischen}, normalized to \code{S} for North Markian /ʃ/.
+    \item /s/ $\sim$ /ʃ/ before vowels: We find Plautdietsch \word{schlape} `to sleep' along with WöWö \word{slopen}, normalized to \code{S} for North Markian /ʃ/.
+    \item /ʃ/ $\sim$ [ʒ]: In loan words, most Low German varieties normalize foreign /ʒ/ to /ʃ/. Under Slavic influence, /ʒ/ was established as independent phoneme in Plautdietsch, thus Plautdietsch \word{rüzhe} `the sound of water falling' alongside WöWö \word{ruuschen}, normalized to \code{S} for North Markian /ʃ/.
+    \item /s/ $\sim$ [z]: For most Low German dialects, voiced [z] is an allophone of /s/ and thus not distinguished in orthography. In Dutch-based orthography, it is nevertheless orthographically distinguished, hence Twents \word{zitte} `manner' alongside WöWö \word{Sitt}. Normalized to /s/.
 \end{itemize}
 
 In the FST, we first provide a mapping from source graphemes to North Markian phonemes, represented by a simplified phonological representation using ASCII characters. Where a source language grapheme has different possible readings (or different phonological mappings to North Markian), all possible interpretations are predicted. This also includes a rule to drop \word{e} in all positions. In addition to context-free mappings, this also includes selected contextual assimilations. In addition to the processes mentioned above, this also includes the treatment of final \word{-en}, which is simplified to \word{-e} in Plautdietsch. In a subsequent step, invalid candidate representations are filtered out. For example, the Plautdietsch trigram \word{jch} must be represented as (palatal) \code{x} [ç], not as the sequence \code{jx} (for /j/ with velar /x/).
 
-In general, the mapping generalizes relatively well, but it overgenerates to some extent. As a counter-measure, we calculate confidence scores, and, although also links with low confidence scores are returned, we would in general consider links with confidence scores larger than 0.5 as safe candidates, as this indicates that the mapping is unique in one direction and no more than two alternatives exist for the other direction, see Tab. \ref{tab-results} for statistics.
+In general, the mapping generalizes relatively well, but it overgenerates to some extent. As a counter-measure, we calculate confidence scores, and, although also links with low confidence scores are returned, we would in general consider links with confidence scores larger than 0.5 as safe candidates, as this indicates that the mapping is unique in one direction and no more than two alternatives exist for the other direction, see Tab. \ref{tab-results} for statistics.\todo{add Sass to tab-results}
+
 
 
 \begin{table}
@@ -365,7 +428,8 @@ Plautdietsch    & 834       & 1,260          & 1,416          & 3,665 \\
 Plattmakers     & 1,306     & 1,676          & 1,895          & 2,433 \\
 Reuter          & 1,571     & 2,107          & 2,375          & 2,835 \\
 Twents          & 1,641     & 3,200          & 4,775          & 10,149\\
-Westphalian     & 2,472     & 3,585          & 4,259          & 5,761 \\\hline
+Westphalian     & 2,472     & 3,585          & 4,259          & 5,761 \\
+\hline
 \end{tabular}
 } % fontsize
 \caption{WöWö links with different dictionaries, filtered by confidence scores}
@@ -376,22 +440,51 @@ Westphalian     & 2,472     & 3,585          & 4,259          & 5,761 \\\hline
 
 For evaluation, we constructed a(n admittedly somewhat complex) SPARQL SELECT query to retrieve all WöWö lemma forms, their URL, (a concatenation of) their German translations, as well as aggregates (concatenations) of lemmas, confidence scores and URLs for all external dictionaries. With this query, this information can be conveniently retrieved and stored as TSV, JSON, etc., and exported to HTML. Both the query and its results are bundled with the release of our data and a snippet of the HTML output is shown in Fig. \ref{fig-interdialectal-links-in-html}. Note that this uses the URLs of the lexical entries (i.e., for external dictionaries, their native URL) as the basis for hyperlinks, so that all links can be interactively explored.
 
+
 \begin{figure*}
     \centering
     \includegraphics[width=1\linewidth]{img/html.png}
-    \caption{Interdialectal link index, HTML export, columns from left to right: WöWö, Plautdietsch, Plattmakers, Reuter, Twents, Westphalian}
+    \caption{Interdialectal link index, HTML export, columns from left to right: WöWö, German translation (WöWö), Plautdietsch, Plattmakers, Reuter, Twents, Westphalian}
     \label{fig-interdialectal-links-in-html}
 \end{figure*}
 
-The number of links predicted for individual dictionaries is summarized in Tab. \ref{tab-results}, reporting only the most confident link for every source dictionary lemma.
-In total, the linking covers 8001 WöWö entries, thus conforming that these to be lemma forms. This number appears to be small in comparison to the 26,713 of the WöWö in total, but to a large extent, this is due to compounds and derived forms that were included in WöWö, but not (or, at least, not as independent lemmas) in the other dictionaries. As such, we have 41 WöWö lemmas for \word{trecken} `to pull' and its derived forms in WöWö, but only 18 of these have been linked. The reason is not so much that words such as \word{rantrecken} `to pull here', \word{rintrecken} `to pull inside', \word{roptrecken} `to pull up there', \word{rövertrecken} `to pull over', \word{rumtrecken} `to pull over', or \word{ruuttrecken} `to pull out' don't exist in the other varieties, but they haven't necessarily been included in the other dictionaries because their formation follows a regular and productive morphological pattern and they don't convey a semantic meaning that cannot be deduced from its parts. In fact, any locative adverb can be combined with \word{trecken} and similar verbs of motion. The same holds true for nominal compounds, which are about as productive as in High German, but are normally not included in the other dictionaries unless they have special semantics that cannot be derived from its parts.
+\todo{update fig-interdialectal-links-in-html with Sass}
+
+On this basis, we conducted a qualitative evaluation for 50 randomly sampled links predicted for WöWö and Plattmakers, and WöWö and the Westphalian dictionary, respectively, with results as summarized in Tab. \ref{tab-eval} and Fig. \ref{fig-eval}. 
+Overall, we found the majority of links (82\% for Plattmakers, 64\% for WWB) to represent exact or approximative matches, and in line with relative proximity of Plattmakers and WöWö varieties, with much better results for Plattmakers. One major reason for the high number of mismatches is that North Low Saxon (WöWö and Plattmakers) normally drop unstressed Middle Low German e (apocope and syncope), whereas the Westphalian varieties (WWB and Twents) normally maintain it. 
+As we cannot reliably distinguish stressed and unstressed syllables, the Westphalian (WWB and Twents) normalization allows to omit \emph{any} \word{e}, so that words like Twents \word{efn} `respectable' and \word{ven} `swampy meadow' include the same (possible) normalizations and can thus be easily confused. As we use Levenshtein distance as an additional disambiguating factor along with normalization-based confidence, dialects with apocope and syncope are likely to yield similar results, whereas the degree of variation (and the Levenshtein distance) is generally greater to dialects without apocope.
+
+By approximative matches, we mean that either one of the words in a multi-word expression is identical, e.g., \word{Block Speck} `chunk of bacon' with Plattmakers \word{Block} `block, chunk, large piece', or that it involves a more or less transparent shift of meaning, e.g., \word{Ool} `eal' with Twents \word{Oal} (derogative nickname for persons notorious for speaking glibly), based on Twents \word{oal} `eal' (which is also linked). 
+Aside from clearly incorrect links, the category of mismatches also includes homophones, e.g., WWB \word{Ō¹st} `branch' and \word{Ō²st} `east', which are historically unrelated, but formally identical (in some varieties, at least), and can thus not be disambiguated by any method of form-based matching.  We conclude that our formal linking method represents a reasonable baseline for future research to improve upon.
+In particular, such improvements can be achieved if meaning relations (i.e., the glosses, definitions and translations in the respective dictionaries) are taken into account. 
+For the time being, we recommend downstream applications for the cross-dialectal linking to operate with high-confidence links, only, i.e., cases in which the lack of ambiguity in the formal agreement indicates a reliable link. For the cautious user, we recommend a confidence threshold of $>0.5$, as this entails that at least one direction of the linking was formally unambiguous. 
+
+\begin{table}
+        \centering
+        \begin{tabular}{lcc}
+        & Plattmakers & WWB \\
+        match & 33 & 29 \\
+        approximative match & 8 & 3 \\
+        mismatch & 9 & 18 \\
+    \end{tabular}
+    \caption{Qualitative evaluation over 50 WöWö links for Plattmakers and WWB dictionaries}
+    \label{tab-eval}
+\end{table}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{lemma-matching-woewoe.png}
+    \caption{Qualitative evaluation over 50 WöWö links for Plattmakers and WWB dictionaries}
+    \label{fig-eval}
+\end{figure}
+
+
+The total number of links predicted for individual dictionaries is summarized in Tab. \ref{tab-results}, reporting only the most confident link for every source dictionary lemma.
+In total, the linking covers 8001 WöWö entries, thus conforming these to be lemma forms. This number appears to be small in comparison to the 26,713 of the WöWö in total, but to a large extent, this is due to compounds and derived forms that were included in WöWö, but not (or, at least, not as independent lemmas) in the other dictionaries. As such, we have 41 WöWö lemmas for \word{trecken} `to pull' and its derived forms in WöWö, but only 18 of these have been linked. The reason is not so much that words such as \word{rantrecken} `to pull here', \word{rintrecken} `to pull inside', \word{roptrecken} `to pull up there', \word{rövertrecken} `to pull over', \word{rumtrecken} `to pull over', or \word{ruuttrecken} `to pull out' don't exist in the other varieties, but they haven't necessarily been included in the other dictionaries because their formation follows a regular and productive morphological pattern and they don't convey a semantic meaning that cannot be deduced from its parts. In fact, any locative adverb can be combined with \word{trecken} and similar verbs of motion. The same holds true for nominal compounds, which are about as productive as in High German, but are normally not included in the other dictionaries unless they have special semantics that cannot be derived from its parts.
 
 Furthermore, the WöWö contains a considerable number of phrasal expressions, which are not necessarily included in the other dictionaries, because these take a primary stance on documenting lexical semantics, not idiomatic expressions. The phrase \word{wat se wull, dat wull se} `what she wants, she wants' is an established idiom, but simply beyond the scope of word-centered (rather than collocation) dictionaries. Likewise, WöWö aims to be a practical tool for the modern day, and so it includes reference translations for certain institutions which are, however, just translated word by word from their respective national language. The \word{Zentroolroot vun de Juden} `Central Council of Jews (in Germany)' mirrors German \word{Zentralrat der Juden} almost exactly, except that the German genitive has been translated as a prepositional phrase. This is necessary because the genitive case was eliminated in North Low Saxon (and other dialects with apocope), this is informative for users of the dictionary (because it gives them a reference translation), and so, this is a legit entry. However, it can also be predicted by any competent speaker from the official designation in German. It is nevertheless a legit entry to the WöWö as a practical dictionary, because it helps its users to find appropriate expressions in cases in which there is a risk to resort to a High German loan construction (such as the genitive, in this case).
 
 Beyond that, there are truly regional expressions or morphophonological processes. By comparison with its High German cognate \word{abgeordnet}, the WöWö term \word{afornt} `delegated' can be constructed to have underlying Low German reference form like \word{*av-ordņt}. But the consonant cluster \word{ordņt} may have been a bit of a challenge to speakers, and the WöWö entry indicates some simplification: The syllabic n has been simplified and the d has been assimilated with the r. Even though similar reduction processes exist in other dialects, as well, the specific result may be different, so that a direct 1:1 correspondence may not be found. Apocope and syncope are wide-spread phenomena in Low German, so that reduction and simplification processes are omnipresent, but with the lack of standard variety to orient towards since the demise of the Hanse, these processes produced regionally different results, and capturing them exhaustively with the FST approach pursued here would be intractable.
-
-At this point, we only predict candidate links for the WöWö, based on formal grounds alone, because the respective external dictionaries 
-
 
 \section{Discussion}
 
