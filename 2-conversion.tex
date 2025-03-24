@@ -2,26 +2,33 @@
 
 \subsection{Overview and Digital Evolution}
 
-The \emph{Wöhrner Wöör} is a Low German dictionary from the Dithmarschen region (North Low Saxon), compiled by Peter Neuber (born 1939 in Stettin), a linguist and educator. The dictionary was created with the goal of documenting and preserving the traditional vocabulary and expressions of Plattdeutsch while simultaneously adapting the language to modern contexts. Beyond recording historical terms, Neuber sought to introduce neologisms for contemporary concepts that previously lacked Low German equivalents, integrating them into the lexicon.
+The \emph{Wöhrner Wöör} is a Low German dictionary from the Dithmarschen region (North Low Saxon), compiled by Peter Neuber (born 1939 in Szczecin), a linguist and educator. The dictionary was created with the goal of documenting and preserving the traditional vocabulary and expressions of Plattdeutsch while simultaneously adapting the language to modern contexts. Beyond recording historical terms, Neuber sought to introduce neologisms for contemporary concepts that previously lacked Low German equivalents, integrating them into the lexicon.
 
-First published in 2001 in Wöhrden, the \emph{Wöhrner Wöör} consists of 699 pages and serves as a German-to-Low-German reference work specific to the Dithmarschen dialect. Following its initial print release, the dictionary has undergone continuous expansion, with subsequent versions distributed exclusively in digital formats such as Microsoft Word and PDF. Within the \emph{Niederdeutsche Literaturdatenbank} (Low German Literature Database), the 2017 Word edition is the most frequently cited version. The latest version, titled \emph{Ditschiplatt: Wöhrner Wöör} from January 2019 is online accessible.\footnote{\url{https://ditschiplatt.de/woehrner-woeoer/}}
+First published in 2001 in Wöhrden, the \emph{Wöhrner Wöör} consists of 699 pages and serves as a German-to-Low-German reference work specific to the Dithmarschen dialect (Fig. \ref{fig-woewoe-excerpt}). Following its initial print release, the dictionary has undergone continuous expansion, with subsequent versions distributed exclusively in digital formats such as Microsoft Word and PDF. %Within the \emph{Niederdeutsche Literaturdatenbank} (Low German Literature Database), the 2017 Word edition is the most frequently cited version. %% more of an DWN artifact
+The latest version, titled \emph{Ditschiplatt: Wöhrner Wöör} from January 2019 is accessible online.\footnote{\url{https://ditschiplatt.de/woehrner-woeoer/}}
 
-A major structural update took place at the end of 2015, when Neuber transitioned the dictionary's orthography to an extended version of the SASS spelling system, originally developed by Johannes Sass. This modified system incorporates diacritical marks (macrons) to denote diphthongs, thereby enhancing phonological precision. Beyond its lexical entries, the dictionary includes a comprehensive user guide for navigating the digital version in MS Office (Word), as well as pronunciation information and a grammatical overview of the Dithmarschen dialect, with a particular focus on verbs, nouns, and adjectives.
+% this is relevant, but we need to get below 12 pages
+\ign{
+    A major structural update took place at the end of 2015, when Neuber transitioned the dictionary's orthography to an extended version of the SASS spelling system, originally developed by Johannes Sass, to incorporate diacritical marks (macrons) to denote diphthongs, thereby enhancing phonological precision. Beyond its lexical entries, the dictionary includes a comprehensive user guide for navigating the digital version in MS Office (Word), as well as pronunciation information and a grammatical overview of the Dithmarschen dialect, with a particular focus on verbs, nouns, and adjectives.
+}
 
-Despite its detailed documentation and modern adaptation efforts, the \emph{Wöhrner Wöör} remains primarily a resource for human readers, lacking structured machine-readable representations that would facilitate its use in NLP applications. Thus, our goal was to convert the \emph{Wöhrner Wöör} into an RDF-based format following the OntoLex-Lemon model to ensure interoperability with other lexical datasets and enable the dictionary’s inclusion in the Linguistic Linked Open Data (LLOD) cloud, paving the way for broader computational applications and cross-linguistic research.
+Despite a remarkable level of detail and complex structure, %its detailed documentation and modern adaptation efforts, 
+the \emph{Wöhrner Wöör} remains primarily a resource for human readers, lacking structured machine-readable representations that would facilitate its use in NLP applications. Thus, our goal was to convert the \emph{Wöhrner Wöör} into an RDF-based format following the OntoLex-Lemon model to ensure interoperability with other lexical datasets and enable the dictionary’s inclusion in the Linguistic Linked Open Data (LLOD) cloud, paving the way for broader computational applications and cross-linguistic research.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{img/woewoe_cover.png}
-    \caption{Front page of the \emph{Wöörner Wöhr} dictionary in docx format.}
-    \label{fig:enter-label}
-\end{figure}
-
+\ign{
+    \begin{figure}
+        \centering
+        \includegraphics[width=1\linewidth]{img/woewoe_cover.png}
+        \caption{Front page of the \emph{Wöörner Wöhr} dictionary in docx format.}
+        \label{fig-woewoe-front}
+    \end{figure}
+}
+    
 \begin{figure*}
     \centering
     \includegraphics[width=0.9\linewidth]{img/woewoe_excerpt-hires.png}
     \caption{Excerpt of the first entries under ‘A’ from the beginning of the lexical part of the \emph{Wöörner Wöhr} dictionary in docx format.}
-    \label{fig:enter-label}
+    \label{fig-woewoe-excerpt}
 \end{figure*}
 
 \subsection{Converting the WöWö}

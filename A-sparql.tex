@@ -3,6 +3,7 @@
 
 The following query was used to construct an integrated HTML view over WöWö lexical entries, their translations and and their respective links.
 
+{\small 
 \begin{verbatim}
 PREFIX vartrans: <http://www.w3.org/ns/lemon/vartrans#>
 PREFIX ontolex: <http://www.w3.org/ns/lemon/ontolex#>
@@ -91,3 +92,4 @@ WHERE {
 	FILTER(BOUND(?pdt) || BOUND(?plattmakers) || BOUND(?reuter) || BOUND(?twents) || BOUND(?wwb))
 } ORDER BY ?woewoe ?le_woewoe
 \end{verbatim}
+} % fontsize

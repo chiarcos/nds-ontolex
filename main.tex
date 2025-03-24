@@ -29,6 +29,7 @@
 \newcommand{\onto}[1]{\texttt{#1}} % for URIs in/for RDF
 \newcommand{\todo}[1]{}                                 % hide TODOs
 % \newcommand{\todo}[1]{\footnote{\huge{TODO:} #1}}     % show TODOs
+\newcommand{\ign}[1]{}                                  % to ignore stuff
 
 % special characters
 \usepackage{fontspec}
@@ -73,10 +74,16 @@
 \input{6-outlook.tex}
 
 % probably not required
-\include{B-limitations.tex}
+\ign{
+    \input{B-limitations.tex}
+}
 
 \bibliography{bib.bib}
 
-\appendix{A-sparql.tex}
+\onecolumn
+
+\appendix
+
+\input{A-sparql.tex}
 
 \end{document}
