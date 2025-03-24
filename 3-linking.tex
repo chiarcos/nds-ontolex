@@ -1,0 +1,123 @@
+\section{Linking the WöWö}
+
+A number of online dictionaries for Low German are available, but usually not under permissive licenses. As a result, we focus on the WöWö dictionary as our primary dataset, and do currently not provide Linked Data editions of other Low German dictionaries. However, these are accessible online, usually with URIs identifying the respective lemma, and we use only \emph{this information} (the existence of a lemma and the assignment of a particular URL) to create an index for these in RDF. We neither apply nor use any specific information from the dictionaries other than the existence of a lemma, we assume that this information does not meet the threshold of originality legally required for copyright to apply,\footnote{See \citet{Margoni2016} for the threshold of originality in EU copyright law.}
+so that these LOD indices to other Low German dictionaries can be published as addenda to the WöWö dataset regardless of the licensing situation of the full data sets. However, should these respective resources be ever served as Linked Data or be made accessible under a more permissive license, the information from the indices/links we provide can be seamlessly integrated into the respective dictionaries.
+
+At the moment, however, any of the dictionaries we are going to work with are perfect silos, in the sense that they are isolated from any other content available on the web. Yet, this does not mean that they do not contain links. In fact, \emph{several} of the existing platforms have been \emph{designed} to provide inter-dialectal links, resp., links between different dictionaries, but they only provide links \emph{within} the respective ecosystem, whereas we pursue an open, extensible approach capable of integrating \emph{any} piece of information accessible on the web. 
+
+\begin{itemize}
+\item The Trier Wörterbuchnetz\footnote{\url{https://woerterbuchnetz.de/}} is an online platform that provides access to a wide range of dictionaries of historical and regional vernaculars from Germany, including dictionaries for historical stages and dialects of German and related varieties, but also dictionaries of Latin, Ladin, Uighur and Russian. In addition, it comprises a major dictionary of the Westphalian dialect of Low German. Aside from basic search, it provides links between languages of related varieties. This includes bibliographical references, but also HTML hyperlinks. Overall, the Wörterbuchnetz builds on a mature stack of XML technologies established during the past two decades. The platform and its content are freely accessible online, and in addition to the human-readable content, there also exists an API that can be used to retrieve lists of lemmata and their attestations. The content itself, however, is not provided in a machine-readable form. Within the Wörterbuchnetz, however, hyperlinks are limited to resources provided by the Wörterbuchnetz itself. It is thus not possible to perform inter-dialectal search for different varieties of Low German within that platform directly. This might change with a project targeted towards integrating major Low German dictionaries into the Wörterbuchnetz currently pursued at the University of Rostock, Germany, but then, again, the existing Wörterbuchnetz technology will only be able to provide links between these resources, but not between them and other dictionaries.
+\item The Digitales Wörterbuch Niederdeutsch (DWN)\footnote{\url{https://www.niederdeutsche-literatur.de/dwn/}} by Peter Hansen is a website that provides access to a `basis' Low German dictionary (adopting spelling rules developed for North Low Saxon), a dictionary for Mecklenburgian-Western Pomeranian as well as custom dictionaries for major authors (Klaus Groth, Fritz Reuter and John-Brinckman Wörterbuch). Each dictionary comes with its own search dialog, and little is known about the technical details, as only a human-readable HTML rendering is accessible. Within each dictionary, lemmata are linked across these datasets with HTML links. We presume that this uses standard SQL technology. Again, no links to external resources are being provided.
+As the content is copyright-protected, we decided to work only with one of these dictionaries \citep{muller1904reuter}, whose content actually goes back to a print dictionary in the public domain. So, we did not exploit the interdialectal links provided by the DWN, nor did we use any of its original content.
+\item Plattmakers\footnote{
+    \url{https://plattmakers.de/de}
+} is an online aggregate dictionary with 22.000 entries provided in a single, searchable database, and developed by Marcus Buck. It provides its content in human-readable fashion, and individual entries are equipped with maps and links to the source literature. Plattmakers is a private website, but some details about its implementation are provided,\footnote{\url{https://plattmakers.de/de/faq}} indicating that it is based on a relational database backend, and supported by automated normalization routines similar to those described below. Unlike DWN and Wörterbuchnetz, Plattmakers lemma URLs provide machine-readable metadata in JSON-LD, so that its content \emph{can} be processed and evaluated in conjunction with WöWö information. At the same time, it is copyright-protected, so that we do not work with any Plattmakers information except for URL and lemma form. Unlike DWN and Wörterbuchnetz, Plattmakers is a private initiative not supported by any academic institution, and some of its more recent content seem to be crowd-sourced and not to meet scientific standards. Yet, it is seems to be more usable than either DWN or Wörterbuchnetz, because it provides direct, interdialectal search capabilities across all dictionaries it covers. We assume that our linking implementation partially replicates functionalities that have been developed in the Plattmakers backend before, but that we provide an added value in extending these to content not covered by Plattmakers, and in particular, to other dictionaries maintained by academic providers, so that conjoint queries over WöWö, Plattmakers, DWN and Wörterbuchnetz information are capable of providing more detailed (and, in parts, better substantiated) information than queries over Plattmakers content alone.
+\end{itemize}
+
+Overall, six online dictionary have been linked with the WöWö, with lexical sources covering the main branches of modern Low German:
+
+\begin{itemize}
+\item For North Low Saxon, we link the Plattmakers dictionary. (WöWö is North Low Saxon, as well, and Plattmakers actually includes other dialects, but normalizes to North Low Saxon orthography.)
+\item For Westphalian (in German orthography), we link the Wörterbuchnetz Westphalian dictionary.
+\item For Dutch Low German dialects, we link the Twents Woordenboek by Goaitsen van der Vliet (2025), available for online search under \url{https://twentswoordenboek.nl} and published under CC BY-NC-SA. Twents is another Westphalian dialect.
+\item For East Low German (in Germany), we use DWN Reuter dictionary, which represents Mecklenburgian-Western Pomeranian dialect.
+\item For emmigrant varieties of East Low German, we work with a Plautdietsch (Mennonite Low German) dictionary developed by Herman Rempel and the Mennonite Literary Society (1984-1995), \url{mennolink.org} (1998-2006), and Eugene Reimer (2006-2007). The data is available as a plain HTML file under CC BY-SA.\footnote{\url{https://ereimer.net/plautdietsch/pddefns.htm}}
+\end{itemize}
+
+This data is relatively diverse in phonology and orthography, so that formal linking must not rely on mere identity. Instead, we use Finite State Transducers to generate hypothetical normalizations against one specific variety of Low German and then generate candidate links for lemmas from different dictionaries for which identical forms are generated (see Sect. \ref{sec-linking-by-agreement}).
+
+\subsection{Data Retrieval and Processing}
+
+Creating an LOD index for a dictionary (portal) typically requires to retrieve (crawl) its complete content, to extract lemma forms and lemma URL and to store these in a TSV file. Optionally, additional information (parts of speech, translation/definition, etc.) can be included in additional columns. For these initial TSV files, we then create an extended TSV file that adds two additional columns, the lemma form in WöWö (for verification), and the WöWö URL (for the actual linking). At the dictionaries that WöWö will be linked with comprise form-level information, only, linking is grounded on \emph{formal agreement} only (see below), so that in most cases, there are many-to-many relationships between dictionary lemmas and WöWö entries (cf. Fig. \ref{fig-twents-woewoe}).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1.0\linewidth]{img/tsv-linked.png}
+    \caption{Linked TSV file except, Twents (left) to WöWö (right)}
+    \label{fig-twents-woewoe}
+\end{figure}
+
+For the RDF export, we calculate the confidence of a link $\langle x,y\rangle$ as the harmonic mean between the linking probabilities $P(x|y)$ and $P(y|x)$, with $P(x|y)$ and $P(y|x)$  estimated from the many-to-many relationships from the extended TSV file. In the RDF export, we only include the most probable links. If there is more than one, we return the WöWö lemma with the lowest Levenshtein distance. If there is still more than one, we return the shortest WöWö lemma. If there is still more than one, we return the lexicographical first lemma.\footnote{
+    The converter has a flag to return all possible links, along with their confidence, but this is disabled by default.
+}
+
+\subsection{RDF Representation}
+
+Although, optionally, all links can be returned, the RDF export only contains the most confident link, by default. For any given link $\langle x,y\rangle$, the confidence score $c(x,y)$ is calculated as $c(x,y)=2 \frac{P(x|y) P(y|x)}{P(x|y) + P(y|x)}$. If more than one match with the same score is found, we return the one with lowest Levenshtein distance. If this is not umambiguous, we return the shortest target URL in order to create a bias against matches between multi-word expressions and their respective parts.
+
+For every external dictionary, we create one lexical entry per source URL, and provide the lemma form as its canonical form. These lexical entries are then linked with WöWö URLs.
+
+We produce linking files in two different flavours. The condensed format only conveys a \onto{lexinfo:geographicalVariant} link between two lexical entries.\footnote{
+    `Geographical variant' is not a perfect term to describe the cross-dialectal relation between individual lexical entries, because this implies that both variants are, in fact, different. However, in many cases they are not, or their differences are merely orthographic. Better suited would be a relation that can be applied to lexical entries that are either equivalent, (virtually) identical or deviant. 
+    Although more appealing from its name, we decided to not resort to \onto{lexinfo:approximate}, because it's a sense relation, not a relation induced by forms ... the sense link is unconfirmed and we don't have machine-readable senses for any dictionary other than WöWö.
+}
+This compact format is well-suited for downstream applications where only the link itself is processed, but it omits provenance and confidence information. Unlike the reified export described below, this is also OWL2/DL-compliant. 
+
+As there is no manual quality control involved here and the automated linking procedure creates many n:m correspondences, it is, however, preferred to provide the confidence scores, as well, for which we adopt a reified representation inspired by \citet{gillis2023refinement}, with a \code{vartrans:LexicalRelation} object that \code{vartrans:relates} an external lexical entry with a lexical entry from WöWö and that uses \code{lexinfo:category} to indicate the type the of relation. There are, however, no exactly corresponding concepts in lexinfo to indicate the type of relation, so that, instead of an individual, we resort to \onto{lexinfo:geographicalVariant}, again. However, this is an object property, not an individual, the resulting data is thus propelled into the semantic space of OWL2/Full.
+
+Every reified link is complemented with a numerical confidence score. Due to the lack of a standard vocabulary for confidence scores in RDF or LexInfo, we adopt \onto{rdf:value} for the purpose, but this is semantically underspecified. We would recommend to create a designated LexInfo property, say, \onto{lexinfo:confidence}.
+
+For the example of WöWö \word{Ool} and its cognates in the Twente dictionary, we arrive at the graph in Fig.\ \ref{fig-links}. The lexical entry \onto{:Ool} is the entry from the RDF edition of WöWö, the individual links are formally associated with a dataset object, like the individual dictionary entries are associated with their source URL that is defined as a \onto{lime:Lexicon}. However, as we only provide a shallow wrapper around the original source document, and because the URLs will not resolve to machine-readable information, we bundle both linking information and the lexical entries drawn from \url{https://twentswoordenboek.nl} in a single file.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\linewidth]{img/links-vis.png}
+    \caption{Reified \onto{lexinfo:geographicalVariant} links between WöWö \word{Ool} `eal' and Twents dictionary}
+    \label{fig-links}
+\end{figure}
+
+%% Dot source
+% digraph G {
+% 
+%  ool -> bxtt_link [label=" vartrans:relates", dir=back]
+%  ool -> bxtu_link [label=" vartrans:relates", dir=back]
+%  ool -> ds[style=invis]
+%  ool [label=":Ool",shape=box]
+% 
+%  ds -> bxtt_link[dir=back, label="dct:isPartOf"]
+%  ds -> bxtu_link[dir=back, label="dct:isPartOf"]
+% ds[label="a dcmitype:Dataset;\nprov:wasGeneratedBy ...;\ncd:description ...", shape=box]
+% 
+% twents[label="<https://twentswoordenboek.nl>\n a lime:Lexicon", shape=box]
+% twents->bxtt[label="lime:entry"]
+% twents->bxtu[label="lime:entry"]
+% 
+%  bxtt_link[label="a vartrans:LexicalRelation; \nrdf:value '0.286'^^xsd:float;\nvartrans:category               \n       lexinfo:geographicalVariant", shape=box]
+%  bxtu_link[label="a vartrans:LexicalRelation; \nrdf:value '0.286'^^xsd:float;\nvartrans:category               \n       lexinfo:geographicalVariant", shape=box]
+% 
+% bxtt_link->twents[style=invis]
+% 
+%  bxtt_link ->  bxtt [label=" vartrans:relates",constrains=false]
+%  bxtu_link ->  bxtu [label=" vartrans:relates"]
+% 
+%  bxtt -> oal_twd [label=" ontolex:canonicalForm"]
+%  bxtt [label="<https://twentswoordenboek.nl/lemmas/id/BXTT>\n a ontolex:LexicalEntry", shape=box]
+%  oal_twd [label="a ontolex:Form;\nontolex:writtenRep 'oal'@twd", shape=box]
+% 
+%  bxtu -> Oal_twd [label=" ontolex:canonicalForm"]
+%  bxtu [label="<https://twentswoordenboek.nl/lemmas/id/BXTU>\n a ontolex:LexicalEntry", shape=box]
+%  Oal_twd [label="a ontolex:Form;\nontolex:writtenRep 'Oal'@twd", shape=box]
+% 
+% }
+
+Another apparent gap in LexInfo is the lack of a counterpart of translation set for lexico-semantic relations other than translation. In its place, we resort to \url{http://purl.org/dc/dcmitype/Dataset}. This is needed to store provenance information (which otherwise needs to be repeated for every lexical link). Every lexical-semantic relation is linked by \onto{dct:isPartOf}.
+
+\subsection{Language Identification}
+
+We provide fine-grained, dialect-level language tags for the different varieties. For this purpose, we use the most fine-grained ISO 639-3 language identifier applicable (or, if no dialect-specific ISO 639-3 language tag is defined, we resort to the language tag \code{nds} as understood in ISO 639-2).\footnote{
+    The language tag \code{nds} is also included in ISO 639-3 for `Low German / Low Saxon', but its scope in ISO 639-3 is uncertain, as a number of Low German dialects (but not all) are assigned individual language tags, but the remaining `\code{nds}' dialects do not correspond to a linguistically well-defined dialect group.
+} 
+% for dialect identification we use https://de.wikipedia.org/wiki/Schleswigsch#/media/Datei:Verbreitungsgebiet_der_heutigen_niederdeutschen_Mundarten-2.PNG
+Where applicable, these language tags are combined with Glottolog identifiers,\footnote{\url{https://glottolog.org}} marked as a private-use subtag (i.e., separated by \code{-x-}) in accordance with BCP47.\footnote{\url{https://www.rfc-editor.org/info/bcp47}}, so we use 
+\code{nds-x-dith1234} (Dithmarsh) for WöWö,
+\code{nds-x-nort3307} (North Hanoveranian) for Plattmakers,
+\code{nds-x-hols1234} (Holsteinian) for Sass,\footnote{
+    Sass aims to be a multidilectal dictionaries, but their spelling conventions originate from the work of Johann Hinrich Fehrs, a speaker of Holsteinian North Low Saxon
+}
+\code{nds-x-meck1239} (Mecklenburg-Western Pomeranian) for Reuter,
+\code{wep} for the Westphalian dictionary,
+    %, we use the unmodified ISO 639-3 tag `wep`, because it uses an artificial, scientific spelling that aims to capture cross-dialectal differences within Westphalian.
+\code{twt} for Twents, and
+\code{pdt} for Plautdietsch.
+
+Despite the dialect identification, we would like to point out that not all lexemes included in Plattmakers and Sass actually originate from that region and may not even be attested there. Here, the language tag only indicates the spelling conventions adopted in accordance with those of a specific variety.

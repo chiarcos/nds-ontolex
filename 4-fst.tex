@@ -1,0 +1,56 @@
+\section{Linking by Formal Agreement}
+\label{sec-linking-by-agreement}
+
+There is no standard orthography for Modern Low German, and the existing dialects differ in their phonology, and, in parts, in their grammar, as well.
+In general, North Low Saxon, Mecklenburgian, Pomeranian and North Markian varieties in Germany are written with slightly defective orthographies based on High German. These are defective in the sense that certain phonological differences are not systematically represented. In particular, this pertains to the three-fold differentiation between long (/e:/,/o:/,/ø:/, etc.), lengthened (/ɛ:/, /ɔ:/, /œ:/) and short vowels (/ɛ/, /ɔ/, /œ/) whose writing cannot be directly grounded on High German spelling conventions designed to express the two-fold distinction between long (/e:/,/o:/,/ø:/) and short vowels (/ɛ/, /ɔ/, /œ/), only. 
+To address this shortcoming, Plattmakers provides phonological representations for many of its entries. As for the Westphalian dialects in Germany, these are phonologically much richer, so that mostly custom orthographies have been developed. The Wörterbuchnetz orthography uses a scientific notation for somewhat artificially reconstructed interdialectal forms. The orthography of the Twents dictionary is based on the spelling of Dutch. Plautdietsch is written with an independently developed orthography based on influences from English and German spelling.
+
+As a result, lemmas are not easily mappable across the dictionaries. However, historical phonology and the characteristics of the respective orthographies are well understood.
+We thus use the Stuttgart Finite State Transducer (SFST) library to normalize the spelling of each specific source to a phonological representation of a specific reference dialect, and for any pair of lemmas that share a reconstructed form in this variety, we predict a possible link. 
+As reference dialect, we work with North Markian, an East Low German dialect spoken in the federal states of Brandenburg and Saxony-Anhalt and characterized by its comparably simple phonology: Whereas some Low German dialects distinguish up to 3 different phonemes representing each of the Middle Low German /ê/, /ô/ and the umlaut of /ô/ with different qualities of diphthongs, these are equally realized as monophthongs in North Markian as documented by \cite{pfaff1898vocale}, \cite{mackel1905mundart} and \cite{teuchert1907mundart}. This reduced phoneme inventory also corresponds roughly to some North Low Saxon dialects, including the reference pronounciation and spelling adopted by Plattmakers and the WöWö phoneme inventory.
+
+On the phonological level, Low German dialects differ primarily in their vowel system, and this includes the following processes:
+
+\begin{itemize}
+\item diphthongization of long vowels: As an example, we find Reuter \word{Kauken} (WöWö \word{Kōken}) `cake', normalized to \code{kOken}, with \code{O} representing North Markian /o:/. Compare this with Reuter \word{Bom} (WöWö \word{bōōm}) `tree', normalized to \code{bOm}.
+\item lengthening and shortening (in all dialects, but in different regions with different results)
+\item apocope and syncope: esp. in Northern dialects, unvoiced Middle Low German short vowels have been lost. North Markian is very systematic in the application of apocope and syncope.\footnote{
+    There have been approaches to provide an orthographic normalization towards dialects without apocope (esp. \url{https://skryvwyse.eu}), but computationally speaking, the random insertion of vowels into dialect forms with apocope and syncope is less tractable than the deletions of vowels from dialects without.
+}
+\item other contextual assimilations, e.g., before r, so we find \word{Barg} (Reuter, Twents, Plattmakers 
+/baɐç/), 
+% /b\overarc{aɐ}ç/), % compiler timeout
+along with \word{bearg} (Twents), \word{Boªrg} (Westphalian) and \word{Boajch} (Plautdietsch),  `mountain', normalized to \code{berg}. From Low Prussian, Plautdietsch inherited the contextual lowering of short vowels, so that we find \word{au} /ɔ:/ in place of \word{e} (\word{Aulfenbeen} `ivory', cf. High German \word{Elfenbein}), \word{e} in place of \word{i} (\word{jlebbrijch} `slippy', WöWö \word{glibberig}), etc.
+\end{itemize}
+
+Another set of regional differences pertains to /s/ and /ʃ/:
+
+\begin{itemize}
+    \item /sk/ $\sim$ /ʃ/: We find Westphalian \word{wisken} `to wish' along with WöWö \word{wischen}, normalized to \code{S} for North Markian /ʃ/.
+    \item /s/ $\sim$ /ʃ/ before vowels: We find Plautdietsch \word{schlape} `to sleep' along with WöWö \word{slopen}, normalized to \code{S} for North Markian /ʃ/.
+    \item /ʃ/ $\sim$ [ʒ]: In loan words, most Low German varieties normalize foreign /ʒ/ to /ʃ/. Under Slavic influence, /ʒ/ was established as independent phoneme in Plautdietsch, thus Plautdietsch \word{rüzhe} `the sound of water falling' alongside WöWö \word{ruuschen}, normalized to \code{S} for North Markian /ʃ/.
+    \item /s/ $\sim$ [z]: For most Low German dialects, voiced [z] is an allophone of /s/ and thus not distinguished in orthography. In Dutch-based orthography, it is nevertheless orthographically distinguished, hence Twents \word{zitte} `manner' alongside WöWö \word{Sitt}. Normalized to /s/.
+\end{itemize}
+
+In the FST, we first provide a mapping from source graphemes to North Markian phonemes, represented by a simplified phonological representation using ASCII characters. Where a source language grapheme has different possible readings (or different phonological mappings to North Markian), all possible interpretations are predicted. This also includes a rule to drop \word{e} in all positions. In addition to context-free mappings, this also includes selected contextual assimilations. In addition to the processes mentioned above, this also includes the treatment of final \word{-en}, which is simplified to \word{-e} in Plautdietsch. In a subsequent step, invalid candidate representations are filtered out. For example, the Plautdietsch trigram \word{jch} must be represented as (palatal) \code{x} [ç], not as the sequence \code{jx} (for /j/ with velar /x/).
+
+In general, the mapping generalizes relatively well, but it overgenerates to some extent. As a counter-measure, we calculate confidence scores, and, although also links with low confidence scores are returned, we would in general consider links with confidence scores larger than 0.5 as safe candidates, as this indicates that the mapping is unique in one direction and no more than two alternatives exist for the other direction, see Tab. \ref{tab-results} for statistics.\todo{add Sass to tab-results}
+
+
+
+\begin{table}
+{\small
+\begin{tabular}{ccccc}
+                & $c=1.0$   & $c\geq 0.65$  & $c \geq 0.5$  & total \\ \hline
+Plautdietsch    & 834       & 1,260          & 1,416          & 3,665 \\
+Plattmakers     & 1,306     & 1,676          & 1,895          & 2,433 \\
+Reuter          & 1,571     & 2,107          & 2,375          & 2,835 \\
+Twents          & 1,641     & 3,200          & 4,775          & 10,149\\
+Westphalian     & 2,472     & 3,585          & 4,259          & 5,761 \\
+\hline
+\end{tabular}
+} % fontsize
+\caption{WöWö links with different dictionaries, filtered by confidence scores}
+\label{tab-results}
+\end{table}
+
