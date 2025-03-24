@@ -17,62 +17,68 @@ Despite its detailed documentation and modern adaptation efforts, the \emph{Wöh
     \label{fig:enter-label}
 \end{figure}
 
-\begin{figure}
+\begin{figure*}
     \centering
-    \includegraphics[width=1\linewidth]{img/woewoe_excerpt.png}
+    \includegraphics[width=0.9\linewidth]{img/woewoe_excerpt-hires.png}
     \caption{Excerpt of the first entries under ‘A’ from the beginning of the lexical part of the \emph{Wöörner Wöhr} dictionary in docx format.}
     \label{fig:enter-label}
-\end{figure}
+\end{figure*}
 
 \subsection{Converting the WöWö}
 
-Converting the \emph{Wöhrner Wöör} into a \emph{machine readable dictionary} (MRD) posed a significant challenge due to its highly fragmented docx format. The extensive use of diverse fonts, colors, and sizes—each encoding different functions—meant that the underlying text information was split into numerous small fragments within the xml format. This complexity required a multi-stage processing pipeline via Python for extraction, merging, and transformation of the text information:
+Converting the \emph{Wöhrner Wöör} into a \emph{machine readable dictionary} (MRD) posed a significant challenge due to its highly fragmented docx format. The extensive use of diverse fonts, colors, and sizes—each encoding different functions—meant that the underlying text information was split into numerous small fragments within the Office Open XML format. This complexity required a multi-stage processing pipeline via Python for extraction, merging, and transformation of the text information:
 
 \begin{enumerate}
-    \item \textsf{\textbf{XML Extraction and Initial CSV Creation}}\\  
-    First, the underlying XML structure of the Word document is parsed using Python’s \texttt{xml.etree.ElementTree}. Each text run (\texttt{<w:r>}) is extracted along with its formatting metadata (font, color, and size), leveraging XML namespaces to accurately retrieve \texttt{<w:t>} (text) and \texttt{<w:rPr>} (formatting) elements. This step generates a preliminary DataFrame, which is then exported as a CSV file.
+    \item \textsf{\textbf{Extracting relevant data from XML}}\\  
+    First, the verbose XML structure of the Word document is parsed using Python’s \texttt{xml.etree}. Each text run (\texttt{<w:r>}) is extracted along with its formatting metadata (font, color, and size), leveraging XML namespaces to accurately retrieve \texttt{<w:t>} (text) and \texttt{<w:rPr>} (formatting) elements. This step generates a preliminary \texttt{DataFrame} stored as a raw CSV file.
 
     \item \textsf{\textbf{Merging Consecutive Text Blocks}}\\  
-    Due to fragmentation, consecutive text blocks that share the same formatting should be merged. A Python script iterates over the DataFrame and combines text segments when the formatting—specifically color and size—remains unchanged. This merging produces a more coherent CSV that better reflects the original document’s logical groupings.
+    Due to fragmentation, consecutive text blocks that share the same formatting should be merged. A Python script iterates over the DataFrame and combines text segments when the formatting—specific color and size remains unchanged. This merging produces a more coherent CSV that better reflects the original document’s logical layout.
 
     \item \textsf{\textbf{Structuring the Data into a Lexical CSV}}\\  
     With the merged text available, the next step involves classifying and extracting entries into five columns, depending on the corresponding formatting:
     \begin{enumerate}
         \item {\textbf{High German Main Lemma}}
-        \item {\textbf{High German Sublemma}}\\Potentially existing subentries for the lexical entry.
+        \item {\textbf{High German Sublemma}}\\Potential subentries per lexical entry.
         \item {\textbf{Low German Translation}}
-        \item {\textbf{Low German Additional Information}}\\ Additional grammatical information—mainly plural forms—that has the same formatting as the corresponding Low German lexical entry.
-        \item {\textbf{Low German IPA Information}}\\Available Low German phonetic transcriptions.
+        \item {\textbf{Low German Additions}}\\ Additional grammatical information -- mainly plural forms -- that has the same formatting as the corresponding Low German lexical entry.
+        \item {\textbf{Low German IPA Information}}\\Low German phonetic transcriptions.
     \end{enumerate}
     This structured CSV serves as the foundation for converting the data into RDF.
 
     \item {\textbf{Generating RDF (Turtle Format)}}\\ 
-    Separate Python scripts convert the structured CSV data into RDF using the Turtle syntax:
+    Separate Python scripts convert the structured CSV data into RDF (Turtle):
     \begin{enumerate}
-        \item {\textbf{High German Entries:}} Entries are first grouped by main lemmas. The script converts them into \texttt{ontolex:LexicalEntry} nodes, each with its own lexical sense (\texttt{ontolex:LexicalSense}). Additional information, such as synonymous terms or usage examples—but mostly plural information or alternative spellings (e.g., variations in single vowels)—is included as \texttt{ontolex:otherForm}. In the case of alternative spellings or plural information, these additions are usually not full words but only the modifications, such as the suffix '-s'. A custom property (\texttt{neuber:subEntry}) links related sublemmas. For all existing sublemmas, individual lexical entries with their own lexical senses are generated in a similar way.
+        \item {\textbf{High German Entries:}} Entries are first grouped by main lemmas. The script converts them into \texttt{ontolex:LexicalEntry} nodes, each with its own \texttt{ontolex:LexicalSense}. Additional information, such as synonymous terms or usage examples -- but mostly plural information or alternative spellings (e.g., variations in single vowels) -- is included as \texttt{ontolex:otherForm}. In the case of alternative spellings or plural information, these additions are usually not full words but only the modifications, such as the suffix '-s'. 
+        
+        A custom property \texttt{neuber:subEntry} links to related sublemmas. For all existing sublemmas, individual lexical entries with their own lexical senses are generated in a similar way.
         \item {\textbf{Low German Translations:}} The Low German translations are processed into lexical entries, each with its own lexical sense. If available, IPA notation is incorporated into the canonical form as \texttt{ontolex:phoneticRep}.
-        \item {\textbf{Linking Translations:}} Finally, unique \texttt{vartrans:translation} entries are generated to link source senses (from main or sublemma entries) with their corresponding target senses (translations).
+        \item {\textbf{Linking Translations:}} Finally, unique \texttt{vartrans:translation} entries are generated to link source senses (High German main or sublemmas) with their corresponding target senses (Low German translations).
     \end{enumerate}
 
     \item {\textbf{Post-Processing}}\\  
     The generated Turtle files are further refined using a regex-based clean-up. This post-processing step removes unnecessary whitespaces, replaces dashes with underscores, and normalizes punctuation to ensure that the RDF output adheres to the required naming conventions and syntactic standards.
 \end{enumerate}
 
-This comprehensive pipeline successfully transforms the fragmented docx format of the \emph{Wöhrner Wöör} into a coherent RDF dataset, aligning the dictionary with the Ontolex-Lemon model. [Making it possible to integrate it into the Linguistic Linked Open Data (LLOD) ecosystem?]. So far, this extraction process has focused on retrieving the most essential information—lexical entries, written and phonetic representations, and their corresponding translations. However, the \emph{Wöhrner Wöör} contains numerous additional details for each entry, such as references and usage examples, which are more challenging to extract due to the complexity of the fragmented formatting.
-
-\begin{figure}
+\begin{figure*}
     \centering
-    \includegraphics[width=1\linewidth]{aal-rdf-graph.png}
-    \caption{Enter Caption}
-    \label{fig:enter-label}
-\end{figure}
+    \includegraphics[width=0.92\linewidth]{aal-rdf-graph.png}
+    \caption{Resulting RDF graph for the entry ‘Aal’.}
+    \label{fig:aal-graph}
+\end{figure*}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{woewoe-entry-eel.png}
-    \caption{Enter Caption}
-    \label{fig:enter-label}
-\end{figure}
+This comprehensive pipeline successfully transforms the fragmented docx format of the \emph{Wöhrner Wöör} into a coherent RDF dataset (cf. Fig. \ref{fig:aal-graph}), aligning the dictionary with the Ontolex-Lemon model, and thus builds a baseline for LLOD integration. So far, this extraction process has focused on retrieving the most essential information -- lexical entries, written and phonetic representations, and their corresponding translations. However, the \emph{Wöhrner Wöör} contains numerous additional details for each entry, such as references and usage examples, which are more challenging to extract due to the complexity of the fragmented format.
+
+
+
+%CF: this was a vertical alternative. However still too small for a single column.
+%\begin{figure*}
+%    \centering
+%    \includegraphics[width=0.6\linewidth]{woewoe-entry-eel.png}
+%    \caption{Enter Caption}
+%    \label{fig:enter-label}
+%\end{figure*}
+
 
 %digraph finite_state_machine {
 %    rankdir=UD;
