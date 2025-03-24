@@ -13,7 +13,7 @@ The latest version, titled \emph{Ditschiplatt: Wöhrner Wöör} from January 201
 }
 
 Despite a remarkable level of detail and complex structure, %its detailed documentation and modern adaptation efforts, 
-the \emph{Wöhrner Wöör} remains primarily a resource for human readers, lacking structured machine-readable representations that would facilitate its use in NLP applications. Thus, our goal was to convert the \emph{Wöhrner Wöör} into an RDF-based format following the OntoLex-Lemon model to ensure interoperability with other lexical datasets and enable the dictionary’s inclusion in the Linguistic Linked Open Data (LLOD) cloud, paving the way for broader computational applications and cross-linguistic research.
+the \emph{Wöhrner Wöör} remains primarily a resource for human readers, lacking structured machine-readable representations that would facilitate its use in NLP applications. Thus, our goal was to convert the \emph{Wöhrner Wöör} into an RDF-based format following the OntoLex-Lemon model to ensure interoperability with other lexical datasets and enable the dictionary’s inclusion in the LLOD cloud, paving the way for broader computational applications and cross-linguistic research.
 
 \ign{
     \begin{figure}
@@ -26,21 +26,21 @@ the \emph{Wöhrner Wöör} remains primarily a resource for human readers, lacki
     
 \begin{figure*}
     \centering
-    \includegraphics[width=0.9\linewidth]{img/woewoe_excerpt-hires.png}
+    \includegraphics[width=0.95\linewidth]{img/woewoe_excerpt-hires.png}
     \caption{Excerpt of the first entries under ‘A’ from the beginning of the lexical part of the \emph{Wöörner Wöhr} dictionary in docx format.}
     \label{fig-woewoe-excerpt}
 \end{figure*}
 
 \subsection{Converting the WöWö}
 
-Converting the \emph{Wöhrner Wöör} into a \emph{machine readable dictionary} (MRD) posed a significant challenge due to its highly fragmented docx format. The extensive use of diverse fonts, colors, and sizes—each encoding different functions—meant that the underlying text information was split into numerous small fragments within the Office Open XML format. This complexity required a multi-stage processing pipeline via Python for extraction, merging, and transformation of the text information:
+Converting the \emph{Wöhrner Wöör} into an MRD posed a significant challenge due to its highly fragmented DOCX format. The extensive use of diverse fonts, colors, and sizes—each encoding different functions—meant that the underlying text information was split into numerous small fragments within the Office Open XML format. This complexity required a multi-stage processing pipeline via Python for extraction, merging, and transformation of the text information:
 
 \begin{enumerate}
     \item \textsf{\textbf{Extracting relevant data from XML}}\\  
     First, the verbose XML structure of the Word document is parsed using Python’s \texttt{xml.etree}. Each text run (\texttt{<w:r>}) is extracted along with its formatting metadata (font, color, and size), leveraging XML namespaces to accurately retrieve \texttt{<w:t>} (text) and \texttt{<w:rPr>} (formatting) elements. This step generates a preliminary \texttt{DataFrame} stored as a raw CSV file.
 
     \item \textsf{\textbf{Merging Consecutive Text Blocks}}\\  
-    Due to fragmentation, consecutive text blocks that share the same formatting should be merged. A Python script iterates over the DataFrame and combines text segments when the formatting—specific color and size remains unchanged. This merging produces a more coherent CSV that better reflects the original document’s logical layout.
+   Due to fragmentation, consecutive text blocks with identical formatting are merged. A Python script iterates through the DataFrame, combining segments that share the same color and size. This merging produces a more coherent CSV that better reflects the original document’s logical layout.
 
     \item \textsf{\textbf{Structuring the Data into a Lexical CSV}}\\  
     With the merged text available, the next step involves classifying and extracting entries into five columns, depending on the corresponding formatting:
@@ -60,7 +60,7 @@ Converting the \emph{Wöhrner Wöör} into a \emph{machine readable dictionary} 
         
         A custom property \texttt{neuber:subEntry} links to related sublemmas. For all existing sublemmas, individual lexical entries with their own lexical senses are generated in a similar way.
         \item {\textbf{Low German Translations:}} The Low German translations are processed into lexical entries, each with its own lexical sense. If available, IPA notation is incorporated into the canonical form as \texttt{ontolex:phoneticRep}.
-        \item {\textbf{Linking Translations:}} Finally, unique \texttt{vartrans:translation} entries are generated to link source senses (High German main or sublemmas) with their corresponding target senses (Low German translations).
+        \item {\textbf{Linking Translations:}} Finally, unique \texttt{vartrans:Translation} entries are generated to link source senses (High German main or sublemmas) with their corresponding target senses (Low German translations).
     \end{enumerate}
 
     \item {\textbf{Post-Processing}}\\  
@@ -69,12 +69,12 @@ Converting the \emph{Wöhrner Wöör} into a \emph{machine readable dictionary} 
 
 \begin{figure*}
     \centering
-    \includegraphics[width=0.92\linewidth]{aal-rdf-graph.png}
-    \caption{Resulting RDF graph for the entry ‘Aal’.}
+    \includegraphics[width=1.0\linewidth]{aal-rdf-graph.png}
+    \caption{Resulting RDF graph for the entry \word{Aal} `eal'.}
     \label{fig:aal-graph}
 \end{figure*}
 
-This comprehensive pipeline successfully transforms the fragmented docx format of the \emph{Wöhrner Wöör} into a coherent RDF dataset (cf. Fig. \ref{fig:aal-graph}), aligning the dictionary with the Ontolex-Lemon model, and thus builds a baseline for LLOD integration. So far, this extraction process has focused on retrieving the most essential information -- lexical entries, written and phonetic representations, and their corresponding translations. However, the \emph{Wöhrner Wöör} contains numerous additional details for each entry, such as references and usage examples, which are more challenging to extract due to the complexity of the fragmented format.
+This comprehensive pipeline successfully transforms the fragmented DOCX format of the \emph{Wöhrner Wöör} into a coherent RDF dataset (cf. Fig. \ref{fig:aal-graph}), aligning the dictionary with the Ontolex-Lemon model, and thus builds a baseline for LLOD integration. So far, this extraction process has focused on retrieving the most essential information -- lexical entries, written and phonetic representations, and their corresponding translations. However, the \emph{Wöhrner Wöör} contains numerous additional details for each entry, such as references and usage examples, which are more challenging to extract due to the complexity of the fragmented format.
 
 
 
