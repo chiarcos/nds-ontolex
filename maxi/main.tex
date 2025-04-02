@@ -27,8 +27,8 @@
 \newcommand{\word}[1]{\textsl{#1}} % for quoting text
 \newcommand{\code}[1]{\texttt{#1}} % for code snippets
 \newcommand{\onto}[1]{\texttt{#1}} % for URIs in/for RDF
-\newcommand{\todo}[1]{}                                 % hide TODOs
-% \newcommand{\todo}[1]{\footnote{\huge{TODO:} #1}}     % show TODOs
+%\newcommand{\todo}[1]{}                                 % hide TODOs
+ \newcommand{\todo}[1]{\footnote{\huge{TODO:} #1}}     % show TODOs
 
 % special characters
 \usepackage{fontspec}
@@ -66,6 +66,8 @@ We describe an approach to provide a cross-dialectal lexical resource for Low Ge
 \end{abstract}
 
 \section{Background}
+
+\todo{In the Eval, that evaluation was for DWN and WWB, not for Plattmakers and WWB}
 
 When discussing the `digital fitness' of languages \cite{soria2016fostering}
 with respect to their usage, dissemination and accessibility on the web, resp., of web resources for speakers of that languages, emphasis is often put on parameters such as the size of the speaker community and the number (or existence) of resources and tools. We consider this perspective, however, to be a little bit too narrow, in that the existence of, say, spell checkers, chatbots, MT technology, dictionaries or just plain texts may not be equally helpful to all speakers of the language under consideration, depending on the \emph{degree of internal diversity} of the language, the orthographies used to write its dialects, and the degree of standardization accepted by the speaker community. As a point in case, we describe an approach for creating both a machine-readable dictionary and interdialectal links for Low German (Low Saxon, ISO 639-2 \code{nds}), a European minority language with a high degree of phonological, morphological and orthographic diversity. It is to be noted that, although Modern Low German has developed a vibrant production of (regional) literature since about 1800 (and is actually present on the web by several [!] Wikipedias\footnote{\url{https://nds.wikipedia.org} for Germany, \url{https://nds-nl.wikipedia.org/} for the Netherlands, \url{https://incubator.wikimedia.org/wiki/Wp/pdt/Hauptsied} for Mennonite Low German (Plautdietsch)} 
@@ -439,6 +441,7 @@ Westphalian     & 2,472     & 3,585          & 4,259          & 5,761 \\
 \label{tab-results}
 \end{table}
 
+
 \section{Querying Interdialectal Links}
 
 For evaluation, we constructed a(n admittedly somewhat complex) SPARQL SELECT query to retrieve all WöWö lemma forms, their URL, (a concatenation of) their German translations, as well as aggregates (concatenations) of lemmas, confidence scores and URLs for all external dictionaries. With this query, this information can be conveniently retrieved and stored as TSV, JSON, etc., and exported to HTML. Both the query and its results are bundled with the release of our data and a snippet of the HTML output is shown in Fig. \ref{fig-interdialectal-links-in-html}. Note that this uses the URLs of the lexical entries (i.e., for external dictionaries, their native URL) as the basis for hyperlinks, so that all links can be interactively explored.
@@ -476,6 +479,13 @@ For the time being, we recommend downstream applications for the cross-dialectal
 
 \begin{figure}
     \centering
+    \includegraphics[width=0.5\linewidth]{img/confidence-vs-accurracy.png}
+    \caption{Accuracy trade-off for 50 randomly sampled WöWö links with Plattmakers and WWB}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}
+    \centering
     \includegraphics[width=1\linewidth]{lemma-matching-woewoe.png}
     \caption{Qualitative evaluation over 50 WöWö links for Plattmakers and WWB dictionaries}
     \label{fig-eval}
@@ -483,7 +493,7 @@ For the time being, we recommend downstream applications for the cross-dialectal
 
 
 The total number of links predicted for individual dictionaries is summarized in Tab. \ref{tab-results}, reporting only the most confident link for every source dictionary lemma.
-In total, the linking covers 8001 WöWö entries, thus conforming these to be lemma forms. This number appears to be small in comparison to the 26,713 of the WöWö in total, but to a large extent, this is due to compounds and derived forms that were included in WöWö, but not (or, at least, not as independent lemmas) in the other dictionaries. As such, we have 41 WöWö lemmas for \word{trecken} `to pull' and its derived forms in WöWö, but only 18 of these have been linked. The reason is not so much that words such as \word{rantrecken} `to pull here', \word{rintrecken} `to pull inside', \word{roptrecken} `to pull up there', \word{rövertrecken} `to pull over', \word{rumtrecken} `to pull over', or \word{ruuttrecken} `to pull out' don't exist in the other varieties, but they haven't necessarily been included in the other dictionaries because their formation follows a regular and productive morphological pattern and they don't convey a semantic meaning that cannot be deduced from its parts. In fact, any locative adverb can be combined with \word{trecken} and similar verbs of motion. The same holds true for nominal compounds, which are about as productive as in High German, but are normally not included in the other dictionaries unless they have special semantics that cannot be derived from its parts.
+In total, the linking covers 8,001 WöWö entries, thus conforming these to be lemma forms. This number appears to be small in comparison to the 26,713 of the WöWö in total, but to a large extent, this is due to compounds and derived forms that were included in WöWö, but not (or, at least, not as independent lemmas) in the other dictionaries. As such, we have 41 WöWö lemmas for \word{trecken} `to pull' and its derived forms in WöWö, but only 18 of these have been linked. The reason is not so much that words such as \word{rantrecken} `to pull here', \word{rintrecken} `to pull inside', \word{roptrecken} `to pull up there', \word{rövertrecken} `to pull over', \word{rumtrecken} `to pull over', or \word{ruuttrecken} `to pull out' don't exist in the other varieties, but they haven't necessarily been included in the other dictionaries because their formation follows a regular and productive morphological pattern and they don't convey a semantic meaning that cannot be deduced from its parts. In fact, any locative adverb can be combined with \word{trecken} and similar verbs of motion. The same holds true for nominal compounds, which are about as productive as in High German, but are normally not included in the other dictionaries unless they have special semantics that cannot be derived from its parts.
 
 Furthermore, the WöWö contains a considerable number of phrasal expressions, which are not necessarily included in the other dictionaries, because these take a primary stance on documenting lexical semantics, not idiomatic expressions. The phrase \word{wat se wull, dat wull se} `what she wants, she wants' is an established idiom, but simply beyond the scope of word-centered (rather than collocation) dictionaries. Likewise, WöWö aims to be a practical tool for the modern day, and so it includes reference translations for certain institutions which are, however, just translated word by word from their respective national language. The \word{Zentroolroot vun de Juden} `Central Council of Jews (in Germany)' mirrors German \word{Zentralrat der Juden} almost exactly, except that the German genitive has been translated as a prepositional phrase. This is necessary because the genitive case was eliminated in North Low Saxon (and other dialects with apocope), this is informative for users of the dictionary (because it gives them a reference translation), and so, this is a legit entry. However, it can also be predicted by any competent speaker from the official designation in German. It is nevertheless a legit entry to the WöWö as a practical dictionary, because it helps its users to find appropriate expressions in cases in which there is a risk to resort to a High German loan construction (such as the genitive, in this case).
 
