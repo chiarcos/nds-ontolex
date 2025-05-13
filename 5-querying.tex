@@ -24,12 +24,14 @@ For evaluation, we used a single SPARQL SELECT query to retrieve all \emph{WöW�
     \label{fig-interdialectal-links-in-html}
 \end{figure*}
 
-On this basis, we conducted a qualitative evaluation for 50 randomly sampled links for Plattmakers and WWB (Tab. \ref{tab-eval}): 
-Overall, we found the majority of links (82\% for Plattmakers, 64\% for WWB) to represent exact or approximative matches, and in line with relative proximity of Plattmakers and \emph{WöWö} varieties, with much better results for Plattmakers. One major factor for the high number of mismatches is that North Low Saxon (\emph{WöWö} and Plattmakers) normally drop unstressed Middle Low German e (apocope and syncope), whereas the Westphalian varieties (WWB and Twents) normally maintain it. 
+On this basis, we conducted a qualitative evaluation for 50 randomly sampled links for Reuter and WWB (Tab. \ref{tab-eval}): 
+Overall, we found the majority of links (82\% for Reuter, 64\% for WWB) to represent exact or approximative matches, and in line with relative proximity of Reuter and \emph{WöWö} varieties, with much better results for Reuter. One major factor for the high number of mismatches is that North Low Saxon (\emph{WöWö} and Plattmakers) normally drop unstressed Middle Low German e (apocope and syncope), whereas the Westphalian varieties (WWB and Twents) normally maintain it. 
 As we cannot reliably distinguish stressed and unstressed syllables, the Westphalian (WWB and Twents) normalization allows to omit \emph{any} \word{e}, so that words like Twents \word{efn} `respectable' and \word{ven} `swampy meadow' include the same (possible) normalizations and can thus be easily confused. As we use Levenshtein distance as an additional disambiguating factor along with normalization-based confidence, dialects with apocope and syncope are likely to yield similar results, whereas the degree of variation (and the Levenshtein distance) is generally greater to dialects without apocope.
 
 By approximative matches, we mean that either one of the words in a multi-word expression is identical, e.g., \word{Block Speck} `chunk of bacon' with Plattmakers \word{Block} `block, chunk, large piece', or that it involves a more or less transparent shift of meaning, e.g., \word{Ool} `eal' with Twents \word{Oal} (derogative nickname for persons notorious for speaking glibly), based on Twents \word{oal} `eal' (which is also linked). 
-Aside from clearly incorrect links, the category of mismatches also includes homophones, e.g., WWB \word{Ō¹st} `branch' and \word{Ō²st} `east', which are historically unrelated, but formally identical (in some varieties, at least), and can thus not be disambiguated by any method of form-based matching.  We conclude that our formal linking method represents a reasonable baseline for future research to improve upon.
+The varying structures of the dictionaries linked to \emph{WöWö} influence the evaluation results. In Sass, Plattmakers, and Platt-WB, the matching rates are considerably higher because different word forms of the same root (nouns, verbs, adjectives, and adverbs) are grouped under the same lemma ID. This is not the case for Reuter and WWB where, for instance, nouns and adjectives--such as Trūe (noun) vs. trǖe (adjective)--are indexed separately. In such cases, the same confidence score is assigned, but if the adjective is selected for the noun entry \word{Tru} in \emph{WöWö} by chance, it only results in an approximate match. The category of mismatches also includes homophones, e.g., WWB \word{Ō¹st} `branch' and \word{Ō²st} `east', which are historically unrelated yet formally identical (in some varieties, at least) and can thus not be disambiguated by any method of form-based matching.
+% Plautdietsch: all lemmas listed under a single URL
+We conclude that our formal linking method represents a reasonable baseline for future research to improve upon.
 In particular, such improvements can be achieved if meaning relations (i.e., the glosses, definitions and translations in the respective dictionaries) are taken into account. 
 For the time being, we recommend downstream applications for the cross-dialectal linking to operate with high-confidence links, only, i.e., cases in which the lack of ambiguity in the formal agreement indicates a reliable link. For the cautious user, we recommend a confidence threshold of $>0.5$, as this entails that at least one direction of the linking was formally unambiguous. 
 
@@ -37,7 +39,7 @@ For the time being, we recommend downstream applications for the cross-dialectal
         \centering
         {\small 
         \begin{tabular}{lcc}
-        & Plattmakers           & WWB \\\hline
+        & Reuter           & WWB \\\hline
         match                   & 0.66 (33/50) & 0.59 (29/50) \\
         approx. match     & 0.16 (8/50) & 0.06 (3/50) \\
         mismatch                & 0.18 (9/50) & 0.36 (18/50) \\
@@ -50,7 +52,7 @@ For the time being, we recommend downstream applications for the cross-dialectal
 %\begin{figure}
 %    \centering
 %    \includegraphics[width=1\linewidth]{lemma-matching-woewoe.png}
-%    \caption{Qualitative evaluation over 50 \emph{WöWö} links for Plattmakers and WWB dictionaries}
+%    \caption{Qualitative evaluation over 50 \emph{WöWö} links for Reuter and WWB dictionaries}
 %    \label{fig-eval}
 %\end{figure}
 
