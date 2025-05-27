@@ -1,0 +1,2 @@
+- migrated to [acoli-repo/papers](https://github.com/acoli-repo/papers)/2025/ldk-2025-nds
+- also mirrorred under [nds-spraakverarbeiden/ontolex-nds](https://github.com/nds-spraakverarbeiden/ontolex-nds)/pub/ldk-2025-nds
