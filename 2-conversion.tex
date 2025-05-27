@@ -36,13 +36,13 @@ the \emph{Wöhrner Wöör} remains primarily a resource for human readers, lacki
 Converting the \emph{Wöhrner Wöör} into an MRD posed a significant challenge due to its highly fragmented DOCX format. The extensive use of diverse fonts, colors, and sizes—each encoding different functions—meant that the underlying text information was split into numerous small fragments within the Office Open XML format. This complexity required a multi-stage processing pipeline via Python for extraction, merging, and transformation of the text information:
 
 \begin{enumerate}
-    \item \textsf{\textbf{Extracting relevant data from XML}}\\  
+    \item {\textbf{Extracting relevant data from XML}}\\  
     First, the verbose XML structure of the Word document is parsed using Python’s \texttt{xml.etree}. Each text run (\texttt{<w:r>}) is extracted along with its formatting metadata (font, color, and size), leveraging XML namespaces to accurately retrieve \texttt{<w:t>} (text) and \texttt{<w:rPr>} (formatting) elements. This step generates a preliminary \texttt{DataFrame} stored as a raw CSV file.
 
-    \item \textsf{\textbf{Merging Consecutive Text Blocks}}\\  
+    \item {\textbf{Merging Consecutive Text Blocks}}\\  
    Due to fragmentation, consecutive text blocks with identical formatting are merged. A Python script iterates through the DataFrame, combining segments that share the same color and size. This merging produces a more coherent CSV that better reflects the original document’s logical layout.
 
-    \item \textsf{\textbf{Structuring the Data into a Lexical CSV}}\\  
+    \item {\textbf{Structuring the Data into a Lexical CSV}}\\  
     With the merged text available, the next step involves classifying and extracting entries into five columns, depending on the corresponding formatting:
     \begin{enumerate}
         \item {\textbf{High German Main Lemma}}
@@ -58,7 +58,7 @@ Converting the \emph{Wöhrner Wöör} into an MRD posed a significant challenge 
     \begin{enumerate}
         \item {\textbf{High German Entries:}} Entries are first grouped by main lemmas. The script converts them into \texttt{ontolex:LexicalEntry} nodes, each with its own \texttt{ontolex:LexicalSense}. Additional information, such as synonymous terms or usage examples -- but mostly plural information or alternative spellings (e.g., variations in single vowels) -- is included as \texttt{ontolex:otherForm}. In the case of alternative spellings or plural information, these additions are usually not full words but only the modifications, such as the suffix '-s'. 
         
-        A custom property \texttt{neuber:subEntry} links to related sublemmas. For all existing sublemmas, individual lexical entries with their own lexical senses are generated in a similar way.
+        A custom property \texttt{subEntry} links to related sublemmas. For all existing sublemmas, individual lexical entries with their own lexical senses are generated in a similar way.
         \item {\textbf{Low German Translations:}} The Low German translations are processed into lexical entries, each with its own lexical sense. If available, IPA notation is incorporated into the canonical form as \texttt{ontolex:phoneticRep}.
         \item {\textbf{Linking Translations:}} Finally, unique \texttt{vartrans:Translation} entries are generated to link source senses (High German main or sublemmas) with their corresponding target senses (Low German translations).
     \end{enumerate}
@@ -74,6 +74,7 @@ Converting the \emph{Wöhrner Wöör} into an MRD posed a significant challenge 
     \label{fig:aal-graph}
 \end{figure*}
 
+\noindent
 This comprehensive pipeline successfully transforms the fragmented DOCX format of the \emph{Wöhrner Wöör} into a coherent RDF dataset (cf. Fig. \ref{fig:aal-graph}), aligning the dictionary with the Ontolex-Lemon model, and thus builds a baseline for LLOD integration. So far, this extraction process has focused on retrieving the most essential information -- lexical entries, written and phonetic representations, and their corresponding translations. However, the \emph{Wöhrner Wöör} contains numerous additional details for each entry, such as references and usage examples, which are more challenging to extract due to the complexity of the fragmented format.
 
 
